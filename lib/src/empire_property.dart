@@ -1,6 +1,5 @@
 import 'package:empire/src/empire_exceptions.dart';
 import 'package:empire/src/empire_cloneable.dart';
-import 'package:flutter/material.dart';
 
 import 'empire_view_model.dart';
 
