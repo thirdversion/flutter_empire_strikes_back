@@ -64,6 +64,17 @@ abstract class EmpireViewModel {
     _assignedTo = widgetHash;
   }
 
+  /// Unassigns the view model from a specific [EmpireWidget] via the widget's hash code.
+  ///
+  /// This method is called automatically by the [EmpireState] when the widget is disposed
+  ///
+  /// **This method should not be called manually.**
+  void unassignFrom(int widgetHash) {
+    if (_assignedTo == widgetHash) {
+      _assignedTo = null;
+    }
+  }
+
   ///Adds an event handler which gets executed each time an [EmpireProperty] value is changed.
   ///
   ///If your listener references a [BuildContext] inside of a [Widget],

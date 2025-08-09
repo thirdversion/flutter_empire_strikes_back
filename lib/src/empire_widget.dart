@@ -123,6 +123,7 @@ abstract class EmpireState<T extends EmpireWidget, E extends EmpireViewModel>
   @mustCallSuper
   void dispose() {
     viewModel.dispose();
+    viewModel.unassignFrom(widget.hashCode);
     super.dispose();
   }
 }
