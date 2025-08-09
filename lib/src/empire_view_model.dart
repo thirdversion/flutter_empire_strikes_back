@@ -36,6 +36,7 @@ abstract class EmpireViewModel {
   /// Whether the view model has already been assigned to a widget
   ///
   /// This is used to prevent the view model from being assigned to multiple widgets
+  /// at the same time
   bool get assignedToWidget => _assignedTo != null;
 
   EmpireViewModel() {
