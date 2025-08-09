@@ -1,12 +1,12 @@
-import 'package:empire/empire.dart';
+import 'package:current/current.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-class _TestViewModel extends EmpireViewModel {
-  final name = EmpireStringProperty('Bob');
-  final age = EmpireIntProperty(20);
+class _TestViewModel extends CurrentViewModel {
+  final name = CurrentStringProperty('Bob');
+  final age = CurrentIntProperty(20);
 
   @override
-  Iterable<EmpireProperty> get empireProps => [name, age];
+  Iterable<CurrentProperty> get currentProps => [name, age];
 }
 
 void main() {

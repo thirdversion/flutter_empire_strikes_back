@@ -1,27 +1,27 @@
-import 'package:empire/empire.dart';
+import 'package:current/current.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-class ListViewModel extends EmpireViewModel {
-  final planets = EmpireListProperty<String>.empty();
+class ListViewModel extends CurrentViewModel {
+  final planets = CurrentListProperty<String>.empty();
 
   @override
-  Iterable<EmpireProperty> get empireProps => [planets];
+  Iterable<CurrentProperty> get currentProps => [planets];
 }
 
-class ListTestWidget extends EmpireWidget<ListViewModel> {
+class ListTestWidget extends CurrentWidget<ListViewModel> {
   const ListTestWidget({
     Key? key,
     required ListViewModel viewModel,
   }) : super(key: key, viewModel: viewModel);
 
   @override
-  EmpireState<EmpireWidget<EmpireViewModel>, ListViewModel> createEmpire() {
+  CurrentState<CurrentWidget<CurrentViewModel>, ListViewModel> createCurrent() {
     return _ListTestWidgetState(viewModel);
   }
 }
 
-class _ListTestWidgetState extends EmpireState<ListTestWidget, ListViewModel> {
+class _ListTestWidgetState extends CurrentState<ListTestWidget, ListViewModel> {
   _ListTestWidgetState(super.viewModel);
 
   @override
@@ -43,7 +43,7 @@ class _ListTestWidgetState extends EmpireState<ListTestWidget, ListViewModel> {
 }
 
 void main() {
-  group('EmpireListProperty Tests', () {
+  group('CurrentListProperty Tests', () {
     late ListViewModel viewModel;
     late ListTestWidget testWidget;
     setUp(() {
@@ -188,25 +188,25 @@ void main() {
     });
 
     test('isEmpty - list is empty - returns true', () {
-      final emptyList = EmpireListProperty<String>.empty();
+      final emptyList = CurrentListProperty<String>.empty();
 
       expect(emptyList.isEmpty, isTrue);
     });
 
     test('isEmpty - list is not empty - returns false', () {
-      final names = EmpireListProperty<String>(['Bob']);
+      final names = CurrentListProperty<String>(['Bob']);
 
       expect(names.isEmpty, isFalse);
     });
 
     test('isNotEmpty - list is empty - returns false', () {
-      final list = EmpireListProperty<String>.empty();
+      final list = CurrentListProperty<String>.empty();
 
       expect(list.isNotEmpty, isFalse);
     });
 
     test('isNotEmpty - list is not empty - returns true', () {
-      final list = EmpireListProperty<String>(['Bob']);
+      final list = CurrentListProperty<String>(['Bob']);
 
       expect(list.isNotEmpty, isTrue);
     });
@@ -214,7 +214,7 @@ void main() {
     test(
         'reset - starting list is empty - add item - should be empty after reset',
         () {
-      final list = EmpireListProperty<String>.empty();
+      final list = CurrentListProperty<String>.empty();
       list.setViewModel(viewModel);
       list.add('Bob');
       list.reset();
@@ -225,7 +225,7 @@ void main() {
         'reset - starting list has data - remove item - only original data after reset',
         () {
       const String listItem = 'Earth';
-      final data = EmpireListProperty<String>([listItem]);
+      final data = CurrentListProperty<String>([listItem]);
       data.setViewModel(viewModel);
 
       expect(data.contains(listItem), isTrue);
@@ -242,7 +242,7 @@ void main() {
     test('ellementAt - list is not empty - returns correct object', () {
       const String expected = 'Frank';
       const int index = 1;
-      final list = EmpireListProperty<String>(['Bob', expected]);
+      final list = CurrentListProperty<String>(['Bob', expected]);
 
       final result = list.elementAt(index);
 
@@ -254,7 +254,7 @@ void main() {
       () {
         const expectedLength = 3;
         final expectedItems = [3, 4, 5];
-        final numbers = EmpireListProperty([1, 2, ...expectedItems]);
+        final numbers = CurrentListProperty([1, 2, ...expectedItems]);
         final result = numbers.where((x) => x > 2);
 
         expect(result.length, equals(expectedLength));
@@ -266,7 +266,7 @@ void main() {
       'firstWhere - returns first matching item',
       () {
         const expected = 3;
-        final numbers = EmpireListProperty([1, 2, 3]);
+        final numbers = CurrentListProperty([1, 2, 3]);
         final result = numbers.firstWhere((element) => element == expected);
 
         expect(result, equals(expected));
@@ -277,7 +277,7 @@ void main() {
       'firstWhere - no match found - returns result from orElse',
       () {
         const expected = -1;
-        final numbers = EmpireListProperty([1, 2, 3]);
+        final numbers = CurrentListProperty([1, 2, 3]);
         final result = numbers.firstWhere(
           (element) => element == expected,
           orElse: () => expected,
@@ -291,7 +291,7 @@ void main() {
       'firstWhereOrNull - match found - returns first matching item',
       () {
         const expected = 3;
-        final numbers = EmpireListProperty([1, 2, 3]);
+        final numbers = CurrentListProperty([1, 2, 3]);
         final result =
             numbers.firstWhereOrNull((element) => element == expected);
 
@@ -303,7 +303,7 @@ void main() {
       'firstWhereOrNull - no match found - returns null',
       () {
         const expected = -1;
-        final numbers = EmpireListProperty([1, 2, 3]);
+        final numbers = CurrentListProperty([1, 2, 3]);
         final result =
             numbers.firstWhereOrNull((element) => element == expected);
 
@@ -315,7 +315,7 @@ void main() {
       'indexWhere - match found - returns correct index',
       () {
         const expected = 2;
-        final numbers = EmpireListProperty([1, 2, 3]);
+        final numbers = CurrentListProperty([1, 2, 3]);
         final result = numbers.indexWhere((element) => element == 3);
 
         expect(result, equals(expected));
@@ -326,7 +326,7 @@ void main() {
       'indexWhere - no match found - returns -1',
       () {
         const expected = -1;
-        final numbers = EmpireListProperty([1, 2, 3]);
+        final numbers = CurrentListProperty([1, 2, 3]);
         final result = numbers.indexWhere((element) => element == expected);
 
         expect(result, equals(expected));
@@ -335,28 +335,28 @@ void main() {
 
     test('reversed - returns reversed list', () {
       final expected = [3, 2, 1];
-      final numbers = EmpireListProperty([1, 2, 3]);
+      final numbers = CurrentListProperty([1, 2, 3]);
       final reversed = numbers.reversed;
       expect(reversed, equals(expected));
     });
 
     test('first - list is not empty - returns first item', () {
       const expected = 1;
-      final numbers = EmpireListProperty([1, 2, 3]);
+      final numbers = CurrentListProperty([1, 2, 3]);
       final first = numbers.first;
       expect(first, equals(expected));
     });
 
     test('last - list is not empty - returns last item', () {
       const expected = 3;
-      final numbers = EmpireListProperty([1, 2, 3]);
+      final numbers = CurrentListProperty([1, 2, 3]);
       final last = numbers.last;
       expect(last, equals(expected));
     });
 
     test('single - list contains one item - returns item', () {
       const expected = 1;
-      final numbers = EmpireListProperty([expected]);
+      final numbers = CurrentListProperty([expected]);
       final single = numbers.single;
       expect(single, equals(expected));
     });
@@ -364,7 +364,7 @@ void main() {
     test('insert - returns correct item at new index', () {
       const expectedNumber = 10;
       const expectedIndex = 1;
-      final numbers = EmpireListProperty([1, 2, 3]);
+      final numbers = CurrentListProperty([1, 2, 3]);
 
       numbers.insert(expectedIndex, expectedNumber, notifyChanges: false);
 
@@ -374,7 +374,7 @@ void main() {
     test('insertAll - returns correct items at new index', () {
       const expectedNumbers = [10, 11, 12];
       const expectedIndex = 1;
-      final numbers = EmpireListProperty([1, 2, 3]);
+      final numbers = CurrentListProperty([1, 2, 3]);
 
       numbers.insertAll(expectedIndex, expectedNumbers, notifyChanges: false);
 
@@ -389,7 +389,7 @@ void main() {
 
     test('insertAllAtEnd - returns correct items at end of list', () {
       final expectedNumbers = [10, 11, 12];
-      final numbers = EmpireListProperty([1, 2, 3]);
+      final numbers = CurrentListProperty([1, 2, 3]);
       final initialListLength = numbers.length;
 
       numbers.insertAllAtEnd(expectedNumbers, notifyChanges: false);
@@ -398,13 +398,13 @@ void main() {
     });
 
     test('toString - returns correct string', () {
-      final numbers = EmpireListProperty([1, 2, 3]);
-      const expected = 'EmpireListProperty([1, 2, 3])';
+      final numbers = CurrentListProperty([1, 2, 3]);
+      const expected = 'CurrentListProperty([1, 2, 3])';
       expect(numbers.toString(), expected);
     });
 
     test('resetting retains original value', () {
-      final numbers = EmpireListProperty<int>.empty();
+      final numbers = CurrentListProperty<int>.empty();
       final items = [1, 2, 3];
 
       numbers.addAll(items, notifyChanges: false);

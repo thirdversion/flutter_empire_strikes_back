@@ -1,16 +1,16 @@
-import 'package:empire/empire.dart';
+import 'package:current/current.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
-///This widget is not intended to be created manually and is used by the [Empire] widget.
+///This widget is not intended to be created manually and is used by the [Current] widget.
 ///
 ///[_uuid] is used to track whether or not this widget should notify its children that they need to
 ///rebuild.
 ///
 ///[viewModel] should contain any properties or functions that any child below this widget need
 ///access to.
-class EmpireApp<T extends EmpireViewModel> extends InheritedWidget {
-  const EmpireApp(
+class CurrentApp<T extends CurrentViewModel> extends InheritedWidget {
+  const CurrentApp(
     this._uuid, {
     Key? key,
     required super.child,
@@ -21,7 +21,7 @@ class EmpireApp<T extends EmpireViewModel> extends InheritedWidget {
   final T Function() viewModel;
 
   @override
-  bool updateShouldNotify(covariant EmpireApp oldWidget) {
+  bool updateShouldNotify(covariant CurrentApp oldWidget) {
     return oldWidget._uuid != _uuid;
   }
 }
@@ -33,7 +33,7 @@ class EmpireApp<T extends EmpireViewModel> extends InheritedWidget {
 ///widgets. See [viewModelOf] for information on accessing the view model.
 ///
 ///[onAppStateChanged] is required and should return a unique [String] value each time it is called.
-///This is used to determine whether the [EmpireApp] inherited widget needs to be updated, therefore
+///This is used to determine whether the [CurrentApp] inherited widget needs to be updated, therefore
 ///updating all it's child widgets. Consider using the [Uuid](https://pub.dev/packages/uuid) package.
 ///
 ///*If you are implementing your own unique string mechanism, know that if it generates the same value
@@ -45,29 +45,29 @@ class EmpireApp<T extends EmpireViewModel> extends InheritedWidget {
 ///```dart
 ///import 'package:uuid/uuid.dart';
 ///
-///Empire(
+///Current(
 ///  myViewModel,
 ///  child: HomePage(),
 ///  onAppStateChanged: () => Uuid().v1(),
 ///)
 ///```
 ///
-///### Nested / Scoped Empires
+///### Nested / Scoped Currents
 ///
 ///```dart
-///Empire(
+///Current(
 ///  MyApplicationViewModel(),
 ///  onAppStateChanged: () => Uuid().v1(),
 ///  child: MaterialApp(
 ///   title: 'My App',
 ///   home: Scaffold(
-///     backgroundColor: Empire.viewModelOf<MyApplicationViewModel>().backgroundColor.value,
-///     child: Empire(
+///     backgroundColor: Current.viewModelOf<MyApplicationViewModel>().backgroundColor.value,
+///     child: Current(
 ///       MyHomePageViewModel(),
 ///       onAppStateChanged: () => Uuid().v1(),
 ///       child: Builder(builder: (innerContext){
 ///         return Center(
-///           child: Text(${Empire.viewModelOf<MyHomePageViewModel>().title.value})
+///           child: Text(${Current.viewModelOf<MyHomePageViewModel>().title.value})
 ///         );
 ///       }),
 ///     )
@@ -76,13 +76,13 @@ class EmpireApp<T extends EmpireViewModel> extends InheritedWidget {
 ///)
 ///
 ///```
-class Empire<T extends EmpireViewModel> extends StatefulWidget {
+class Current<T extends CurrentViewModel> extends StatefulWidget {
   final T viewModel;
   final Widget child;
   final String Function() onAppStateChanged;
   final bool debugPrintStateChanges;
 
-  const Empire(
+  const Current(
     this.viewModel, {
     Key? key,
     required this.child,
@@ -91,34 +91,34 @@ class Empire<T extends EmpireViewModel> extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<Empire> createState() => _EmpireState<T>();
+  State<Current> createState() => _CurrentState<T>();
 
-  ///Gets the instance of the [EmpireApp] that matches the generic type argument [T].
+  ///Gets the instance of the [CurrentApp] that matches the generic type argument [T].
   ///
   ///You can access the associated view model via the returned
-  ///[EmpireApp]. However you'll most likely want to use the shorthand [viewModelOf] function to do
+  ///[CurrentApp]. However you'll most likely want to use the shorthand [viewModelOf] function to do
   ///so.
-  static EmpireApp<T> of<T extends EmpireViewModel>(BuildContext context) {
-    final EmpireApp<T>? result =
-        context.dependOnInheritedWidgetOfExactType<EmpireApp<T>>();
-    assert(result != null, 'No Empire found in context');
+  static CurrentApp<T> of<T extends CurrentViewModel>(BuildContext context) {
+    final CurrentApp<T>? result =
+        context.dependOnInheritedWidgetOfExactType<CurrentApp<T>>();
+    assert(result != null, 'No Current found in context');
     return result!;
   }
 
-  ///Gets the [EmpireViewModel] from the [EmpireApp] that matches the generic type argument [T].
+  ///Gets the [CurrentViewModel] from the [CurrentApp] that matches the generic type argument [T].
   ///
   ///This method can be called from any widget
   ///below this one in the widget tree. (Example: from a child widget):
   ///```dart
-  ///Empire.viewModelOf<MyApplicationViewModel>().logOut();
+  ///Current.viewModelOf<MyApplicationViewModel>().logOut();
   ///```
-  static T viewModelOf<T extends EmpireViewModel>(BuildContext context) {
-    final EmpireApp<T> result = of(context);
+  static T viewModelOf<T extends CurrentViewModel>(BuildContext context) {
+    final CurrentApp<T> result = of(context);
     return result.viewModel();
   }
 }
 
-class _EmpireState<T extends EmpireViewModel> extends State<Empire> {
+class _CurrentState<T extends CurrentViewModel> extends State<Current> {
   String? _applicationStateId;
 
   @override
@@ -139,9 +139,9 @@ class _EmpireState<T extends EmpireViewModel> extends State<Empire> {
 
   @override
   Widget build(BuildContext context) {
-    return EmpireApp<T>(
+    return CurrentApp<T>(
       _applicationStateId,
-      viewModel: <E extends EmpireViewModel>() => widget.viewModel as E,
+      viewModel: <E extends CurrentViewModel>() => widget.viewModel as E,
       child: Builder(builder: (context) {
         return widget.child;
       }),

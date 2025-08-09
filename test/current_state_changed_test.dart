@@ -1,14 +1,14 @@
-import 'package:empire/empire.dart';
+import 'package:current/current.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  group('EmpireStateChanged Extension Tests', () {
+  group('CurrentStateChanged Extension Tests', () {
     test(
         'containsPropertyName - contains event matching property name - returns true',
         () {
       const String propertyName = 'name';
       final events = [
-        EmpireStateChanged('Bob', null, propertyName: propertyName)
+        CurrentStateChanged('Bob', null, propertyName: propertyName)
       ];
 
       final foundEvent = events.containsPropertyName(propertyName);
@@ -20,7 +20,7 @@ void main() {
         'containsPropertyName - does not contain event matching property name - returns false',
         () {
       const String propertyName = 'name';
-      final events = <EmpireStateChanged<String>>[];
+      final events = <CurrentStateChanged<String>>[];
 
       final foundEvent = events.containsPropertyName(propertyName);
 
@@ -31,7 +31,8 @@ void main() {
         'firstForPropertyName - contains event matching property name - returns event',
         () {
       const String propertyName = 'name';
-      final event = EmpireStateChanged('Bob', null, propertyName: propertyName);
+      final event =
+          CurrentStateChanged('Bob', null, propertyName: propertyName);
       final events = [event];
       final result = events.firstForPropertyName(propertyName);
 
@@ -43,7 +44,7 @@ void main() {
         'firstForPropertyName - does not contain event matching property name - returns null',
         () {
       const String propertyName = 'name';
-      final events = <EmpireStateChanged<String>>[];
+      final events = <CurrentStateChanged<String>>[];
       final result = events.firstForPropertyName(propertyName);
 
       expect(result, isNull);
@@ -55,7 +56,7 @@ void main() {
       const String nextValue = 'Bob';
       const String propertyName = 'name';
       final events = [
-        EmpireStateChanged(nextValue, null, propertyName: propertyName)
+        CurrentStateChanged(nextValue, null, propertyName: propertyName)
       ];
 
       final result = events.nextValueFor(propertyName);
@@ -66,7 +67,7 @@ void main() {
         'nextValueFor - does not contain event matching property name - returns nextValue',
         () {
       const String propertyName = 'name';
-      final events = <EmpireStateChanged<String>>[];
+      final events = <CurrentStateChanged<String>>[];
 
       final result = events.nextValueFor(propertyName);
       expect(result, isNull);
@@ -78,7 +79,7 @@ void main() {
       const String previousValue = 'Bob';
       const String propertyName = 'name';
       final events = [
-        EmpireStateChanged(null, previousValue, propertyName: propertyName)
+        CurrentStateChanged(null, previousValue, propertyName: propertyName)
       ];
 
       final result = events.previousValueFor(propertyName);
@@ -89,7 +90,7 @@ void main() {
         'previousValueFor - does not contain event matching property name - returns previousValue',
         () {
       const String propertyName = 'name';
-      final events = <EmpireStateChanged<String>>[];
+      final events = <CurrentStateChanged<String>>[];
 
       final result = events.previousValueFor(propertyName);
       expect(result, isNull);

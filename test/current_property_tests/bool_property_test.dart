@@ -1,27 +1,27 @@
-import 'package:empire/empire.dart';
+import 'package:current/current.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-class BoolViewModel extends EmpireViewModel {
-  final isAwesome = EmpireBoolProperty(true);
+class BoolViewModel extends CurrentViewModel {
+  final isAwesome = CurrentBoolProperty(true);
 
   @override
-  Iterable<EmpireProperty> get empireProps => [isAwesome];
+  Iterable<CurrentProperty> get currentProps => [isAwesome];
 }
 
-class BoolTestWidget extends EmpireWidget<BoolViewModel> {
+class BoolTestWidget extends CurrentWidget<BoolViewModel> {
   const BoolTestWidget({
     Key? key,
     required BoolViewModel viewModel,
   }) : super(key: key, viewModel: viewModel);
 
   @override
-  EmpireState<EmpireWidget<EmpireViewModel>, BoolViewModel> createEmpire() {
+  CurrentState<CurrentWidget<CurrentViewModel>, BoolViewModel> createCurrent() {
     return _BoolTestWidgetState(viewModel);
   }
 }
 
-class _BoolTestWidgetState extends EmpireState<BoolTestWidget, BoolViewModel> {
+class _BoolTestWidgetState extends CurrentState<BoolTestWidget, BoolViewModel> {
   _BoolTestWidgetState(super.viewModel);
 
   @override
@@ -44,15 +44,15 @@ class _BoolTestWidgetState extends EmpireState<BoolTestWidget, BoolViewModel> {
   }
 }
 
-class NullableBoolViewModel extends EmpireViewModel {
-  final isAwesome = EmpireNullableBoolProperty();
+class NullableBoolViewModel extends CurrentViewModel {
+  final isAwesome = CurrentNullableBoolProperty();
 
   @override
-  Iterable<EmpireProperty> get empireProps => [isAwesome];
+  Iterable<CurrentProperty> get currentProps => [isAwesome];
 }
 
 void main() {
-  group('EmpireBoolProperty Tests', () {
+  group('CurrentBoolProperty Tests', () {
     late BoolViewModel viewModel;
     late BoolTestWidget testWidget;
     setUp(() {
@@ -105,7 +105,7 @@ void main() {
     });
   });
 
-  group('EmpireNullableBoolProperty Tests', () {
+  group('CurrentNullableBoolProperty Tests', () {
     late NullableBoolViewModel viewModel;
 
     setUp(() {

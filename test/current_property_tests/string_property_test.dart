@@ -1,28 +1,29 @@
-import 'package:empire/empire.dart';
+import 'package:current/current.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-class StringViewModel extends EmpireViewModel {
-  final name = EmpireStringProperty('Bob');
+class StringViewModel extends CurrentViewModel {
+  final name = CurrentStringProperty('Bob');
 
   @override
-  Iterable<EmpireProperty> get empireProps => [name];
+  Iterable<CurrentProperty> get currentProps => [name];
 }
 
-class StringTestWidget extends EmpireWidget<StringViewModel> {
+class StringTestWidget extends CurrentWidget<StringViewModel> {
   const StringTestWidget({
     Key? key,
     required StringViewModel viewModel,
   }) : super(key: key, viewModel: viewModel);
 
   @override
-  EmpireState<EmpireWidget<EmpireViewModel>, StringViewModel> createEmpire() {
+  CurrentState<CurrentWidget<CurrentViewModel>, StringViewModel>
+      createCurrent() {
     return _StringTestWidgetState(viewModel);
   }
 }
 
 class _StringTestWidgetState
-    extends EmpireState<StringTestWidget, StringViewModel> {
+    extends CurrentState<StringTestWidget, StringViewModel> {
   _StringTestWidgetState(super.viewModel);
 
   @override
@@ -45,11 +46,11 @@ class _StringTestWidgetState
   }
 }
 
-class NullableStringViewModel extends EmpireViewModel {
-  final name = EmpireNullableStringProperty();
+class NullableStringViewModel extends CurrentViewModel {
+  final name = CurrentNullableStringProperty();
 
   @override
-  Iterable<EmpireProperty> get empireProps => [name];
+  Iterable<CurrentProperty> get currentProps => [name];
 }
 
 void main() {

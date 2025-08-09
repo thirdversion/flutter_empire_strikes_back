@@ -1,14 +1,14 @@
-part of 'empire_property.dart';
+part of 'current_property.dart';
 
-///An [EmpireProperty] with similar characteristics as a an
+///An [CurrentProperty] with similar characteristics as a an
 ///ordinary dart bool object
 ///
 ///Then underlying bool value cannot be null
 ///
-///When the value of this changes, it will send a [EmpireStateChanged] event by default. This includes
+///When the value of this changes, it will send a [CurrentStateChanged] event by default. This includes
 ///automatically triggering a UI rebuild.
-class EmpireBoolProperty extends EmpireProperty<bool> {
-  EmpireBoolProperty(super.value, {super.propertyName})
+class CurrentBoolProperty extends CurrentProperty<bool> {
+  CurrentBoolProperty(super.value, {super.propertyName})
       : super(isPrimitiveType: true);
 
   ///Whether the underlying value is true
@@ -26,15 +26,15 @@ class EmpireBoolProperty extends EmpireProperty<bool> {
       super.set(false, notifyChange: notifyChange);
 }
 
-///An [EmpireProperty] with similar characteristics as a an
+///An [CurrentProperty] with similar characteristics as a an
 ///ordinary dart bool object.
 ///
 ///Then underlying bool value *CAN* be null
 ///
-///When the value of this changes, it will send a [EmpireStateChanged] event by default. This includes
+///When the value of this changes, it will send a [CurrentStateChanged] event by default. This includes
 ///automatically triggering a UI rebuild.
-class EmpireNullableBoolProperty extends EmpireProperty<bool?> {
-  EmpireNullableBoolProperty({bool? value, super.propertyName})
+class CurrentNullableBoolProperty extends CurrentProperty<bool?> {
+  CurrentNullableBoolProperty({bool? value, super.propertyName})
       : super(value, isPrimitiveType: true);
 
   ///Whether the underlying value is not null and true

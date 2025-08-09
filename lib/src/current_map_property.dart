@@ -1,25 +1,25 @@
-part of 'empire_property.dart';
+part of 'current_property.dart';
 
-///An [EmpireProperty] with similar characteristics as a dart [Map<K, V>]
+///An [CurrentProperty] with similar characteristics as a dart [Map<K, V>]
 ///
-///Any change to the internal map will send a [EmpireStateChanged] event by default. This includes
+///Any change to the internal map will send a [CurrentStateChanged] event by default. This includes
 ///automatically triggering a UI rebuild.
-class EmpireMapProperty<K, V> extends EmpireProperty<Map<K, V>> {
-  EmpireMapProperty(super.value, {super.propertyName}) {
+class CurrentMapProperty<K, V> extends CurrentProperty<Map<K, V>> {
+  CurrentMapProperty(super.value, {super.propertyName}) {
     _originalValue = Map<K, V>.from(value);
   }
 
-  ///Factory constructor for initializing an [EmpireMapProperty] to an empty [Map].
+  ///Factory constructor for initializing an [CurrentMapProperty] to an empty [Map].
   ///
-  ///See [EmpireProperty] for [propertyName] usages.
+  ///See [CurrentProperty] for [propertyName] usages.
   ///
   ///## Example
   ///
   ///```dart
-  ///final jsonData = EmpireMapProperty<String, dynamic>.empty();
+  ///final jsonData = CurrentMapProperty<String, dynamic>.empty();
   ///```
-  factory EmpireMapProperty.empty({String? propertyName}) {
-    return EmpireMapProperty(<K, V>{}, propertyName: propertyName);
+  factory CurrentMapProperty.empty({String? propertyName}) {
+    return CurrentMapProperty(<K, V>{}, propertyName: propertyName);
   }
 
   ///The map entries in the map
@@ -66,7 +66,7 @@ class EmpireMapProperty<K, V> extends EmpireProperty<Map<K, V>> {
 
     if (notifyChanges) {
       viewModel.notifyChanges([
-        EmpireStateChanged.addedMapToMap(other, propertyName: propertyName)
+        CurrentStateChanged.addedMapToMap(other, propertyName: propertyName)
       ]);
     }
   }
@@ -80,7 +80,7 @@ class EmpireMapProperty<K, V> extends EmpireProperty<Map<K, V>> {
 
     if (notifyChanges) {
       viewModel.notifyChanges([
-        EmpireStateChanged.addedToMap(entry.key, entry.value,
+        CurrentStateChanged.addedToMap(entry.key, entry.value,
             propertyName: propertyName)
       ]);
     }
@@ -94,7 +94,7 @@ class EmpireMapProperty<K, V> extends EmpireProperty<Map<K, V>> {
   /// The operation is equivalent to doing `this[entry.key] = entry.value`
   /// for each [MapEntry] of the iterable.
   /// ```dart
-  /// final planets = EmpireMapProperty<int, String>{1: 'Mercury', 2: 'Venus',
+  /// final planets = CurrentMapProperty<int, String>{1: 'Mercury', 2: 'Venus',
   ///   3: 'Earth', 4: 'Mars'};
   /// final gasGiants = <int, String>{5: 'Jupiter', 6: 'Saturn'};
   /// final iceGiants = <int, String>{7: 'Uranus', 8: 'Neptune'};
@@ -110,7 +110,7 @@ class EmpireMapProperty<K, V> extends EmpireProperty<Map<K, V>> {
 
     if (notifyChanges) {
       viewModel.notifyChanges([
-        EmpireStateChanged.addedEntriesToMap(entries,
+        CurrentStateChanged.addedEntriesToMap(entries,
             propertyName: propertyName)
       ]);
     }
@@ -125,7 +125,7 @@ class EmpireMapProperty<K, V> extends EmpireProperty<Map<K, V>> {
 
     if (notifyChanges) {
       viewModel.notifyChanges([
-        EmpireStateChanged.addedToMap(key, value, propertyName: propertyName)
+        CurrentStateChanged.addedToMap(key, value, propertyName: propertyName)
       ]);
     }
   }
@@ -148,7 +148,7 @@ class EmpireMapProperty<K, V> extends EmpireProperty<Map<K, V>> {
   /// planetsFromSun.update(2, (value) => 'Venus');
   /// print(planetsFromSun); // {1: Mercury, 2: Venus, 3: Earth}
   ///
-  /// final largestPlanets = EmpireMapProperty<int, String>{1: 'Jupiter', 2: 'Saturn',
+  /// final largestPlanets = CurrentMapProperty<int, String>{1: 'Jupiter', 2: 'Saturn',
   ///   3: 'Neptune'};
   /// // Key value 8 is missing from list, add it using [ifAbsent].
   /// largestPlanets.update(8, (value) => 'New', ifAbsent: () => 'Mercury');
@@ -161,7 +161,7 @@ class EmpireMapProperty<K, V> extends EmpireProperty<Map<K, V>> {
 
     if (notifyChanges) {
       viewModel.notifyChanges([
-        EmpireStateChanged.updateMapEntry(
+        CurrentStateChanged.updateMapEntry(
           key,
           originalValue,
           updatedValue,
@@ -178,18 +178,18 @@ class EmpireMapProperty<K, V> extends EmpireProperty<Map<K, V>> {
   /// Iterates over all entries in the map and updates them with the result
   /// of invoking [update].
   /// ```dart
-  /// final terrestrial = EmpireMapProperty<int, String>{1: 'Mercury', 2: 'Venus', 3: 'Earth'};
+  /// final terrestrial = CurrentMapProperty<int, String>{1: 'Mercury', 2: 'Venus', 3: 'Earth'};
   /// terrestrial.updateAll((key, value) => value.toUpperCase());
   /// print(terrestrial); // {1: MERCURY, 2: VENUS, 3: EARTH}
   /// ```
   void updateAll(V Function(K key, V value) update,
       {bool notifyChanges = true}) {
-    final stateChangedEvents = <EmpireStateChanged<V>>[];
+    final stateChangedEvents = <CurrentStateChanged<V>>[];
 
     _value.updateAll((key, value) {
       final previousValue = value;
       final updatedValue = update(key, value);
-      stateChangedEvents.add(EmpireStateChanged.updateMapEntry(
+      stateChangedEvents.add(CurrentStateChanged.updateMapEntry(
         key,
         previousValue,
         updatedValue,
@@ -211,7 +211,7 @@ class EmpireMapProperty<K, V> extends EmpireProperty<Map<K, V>> {
   /// Note that some maps allow `null` as a value,
   /// so a returned `null` value doesn't always mean that the key was absent.
   /// ```dart
-  /// final terrestrial = EmpireMapProperty<int, String>{1: 'Mercury', 2: 'Venus', 3: 'Earth'};
+  /// final terrestrial = CurrentMapProperty<int, String>{1: 'Mercury', 2: 'Venus', 3: 'Earth'};
   /// final removedValue = terrestrial.remove(2); // Venus
   /// print(terrestrial); // {1: Mercury, 3: Earth}
   /// ```
@@ -220,7 +220,7 @@ class EmpireMapProperty<K, V> extends EmpireProperty<Map<K, V>> {
 
     if (notifyChanges) {
       viewModel.notifyChanges([
-        EmpireStateChanged.removedFromMap(
+        CurrentStateChanged.removedFromMap(
           key,
           removedValue,
           propertyName: propertyName,
@@ -233,19 +233,19 @@ class EmpireMapProperty<K, V> extends EmpireProperty<Map<K, V>> {
 
   /// Removes all entries of this map that satisfy the given [test].
   /// ```dart
-  /// final terrestrial = EmpireMapProperty<int, String>{1: 'Mercury', 2: 'Venus', 3: 'Earth'};
+  /// final terrestrial = CurrentMapProperty<int, String>{1: 'Mercury', 2: 'Venus', 3: 'Earth'};
   /// terrestrial.removeWhere((key, value) => value.startsWith('E'));
   /// print(terrestrial); // {1: Mercury, 2: Venus}
   /// ```
   void removeWhere(bool Function(K key, V value) test,
       {bool notifyChanges = true}) {
-    final stateChangedEvents = <EmpireStateChanged<V>>[];
+    final stateChangedEvents = <CurrentStateChanged<V>>[];
 
     _value.removeWhere((key, value) {
       final shouldRemove = test(key, value);
 
       if (shouldRemove) {
-        stateChangedEvents.add(EmpireStateChanged.removedFromMap(
+        stateChangedEvents.add(CurrentStateChanged.removedFromMap(
           key,
           value,
           propertyName: propertyName,
@@ -264,12 +264,12 @@ class EmpireMapProperty<K, V> extends EmpireProperty<Map<K, V>> {
   ///
   /// After this, the map is empty.
   /// ```dart
-  /// final planets = EmpireMapProperty<int, String>{1: 'Mercury', 2: 'Venus', 3: 'Earth'};
+  /// final planets = CurrentMapProperty<int, String>{1: 'Mercury', 2: 'Venus', 3: 'Earth'};
   /// planets.clear(); // {}
   /// ```
   void clear({bool notifyChanges = true}) {
     final stateChangedEvent =
-        EmpireStateChanged(<K, V>{}, _value, propertyName: propertyName);
+        CurrentStateChanged(<K, V>{}, _value, propertyName: propertyName);
 
     _value.clear();
 
@@ -283,7 +283,7 @@ class EmpireMapProperty<K, V> extends EmpireProperty<Map<K, V>> {
   /// Returns true if any of the keys in the map are equal to `key`
   /// according to the equality used by the map.
   /// ```dart
-  /// final moonCount = EmpireMapProperty<String, int>{'Mercury': 0, 'Venus': 0, 'Earth': 1,
+  /// final moonCount = CurrentMapProperty<String, int>{'Mercury': 0, 'Venus': 0, 'Earth': 1,
   ///   'Mars': 2, 'Jupiter': 79, 'Saturn': 82, 'Uranus': 27, 'Neptune': 14 };
   /// final containsUranus = moonCount.containsKey('Uranus'); // true
   /// final containsPluto = moonCount.containsKey('Pluto'); // false
@@ -295,7 +295,7 @@ class EmpireMapProperty<K, V> extends EmpireProperty<Map<K, V>> {
   /// Returns true if any of the values in the map are equal to `value`
   /// according to the `==` operator.
   /// ```dart
-  /// final moonCount = EmpireMapProperty<String, int>{'Mercury': 0, 'Venus': 0, 'Earth': 1,
+  /// final moonCount = CurrentMapProperty<String, int>{'Mercury': 0, 'Venus': 0, 'Earth': 1,
   ///   'Mars': 2, 'Jupiter': 79, 'Saturn': 82, 'Uranus': 27, 'Neptune': 14 };
   /// final moons3 = moonCount.containsValue(3); // false
   /// final moons82 = moonCount.containsValue(82); // true
@@ -312,7 +312,7 @@ class EmpireMapProperty<K, V> extends EmpireProperty<Map<K, V>> {
   ///
   /// Calling `action` must not add or remove keys from the map.
   /// ```dart
-  /// final planetsByMass = EmpireMapProperty<num, String>{0.81: 'Venus', 1: 'Earth',
+  /// final planetsByMass = CurrentMapProperty<num, String>{0.81: 'Venus', 1: 'Earth',
   ///   0.11: 'Mars', 17.15: 'Neptune'};
   ///
   /// planetsByMass.forEach((key, value) {
@@ -337,7 +337,7 @@ class EmpireMapProperty<K, V> extends EmpireProperty<Map<K, V>> {
 
     if (notifyChange) {
       viewModel.notifyChanges([
-        EmpireStateChanged(
+        CurrentStateChanged(
           _originalValue,
           currentValue,
           propertyName: propertyName,

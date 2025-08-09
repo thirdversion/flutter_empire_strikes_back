@@ -1,61 +1,62 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import 'empire_view_model.dart';
+import 'current_view_model.dart';
 
 ///Base class for any widget that needs to be updated when the state of your widget changes.
 ///
-///Requires a class that extends [EmpireViewModel] to be passed to the [viewModel] argument. The
-///[EmpireViewModel] is responsible for notifying this widget when the UI needs to be updated.
+///Requires a class that extends [CurrentViewModel] to be passed to the [viewModel] argument. The
+///[CurrentViewModel] is responsible for notifying this widget when the UI needs to be updated.
 ///
 ///### Usage
 ///
 ///```dart
-///class MyWidget extends EmpireWidget<MyViewModel> {
+///class MyWidget extends CurrentWidget<MyViewModel> {
 ///
 ///    const MyWidget({super.key, required super.viewModel});
 ///
 ///    @override
-///    EmpireState<EmpireWidget<EmpireViewModel>, MyViewModel> createEmpire() => _MyWidgetState(viewModel);
+///    CurrentState<CurrentWidget<CurrentViewModel>, MyViewModel> createCurrent() => _MyWidgetState(viewModel);
 ///
 ///}
 ///```
-abstract class EmpireWidget<T extends EmpireViewModel> extends StatefulWidget {
+abstract class CurrentWidget<T extends CurrentViewModel>
+    extends StatefulWidget {
   final T viewModel;
   final bool debugPrintStateChanges;
-  const EmpireWidget({
+  const CurrentWidget({
     Key? key,
     required this.viewModel,
     this.debugPrintStateChanges = false,
   }) : super(key: key);
 
-  ///Create an instance of [EmpireState] for this widget.
+  ///Create an instance of [CurrentState] for this widget.
   ///
   ///**IMPORTANT**
-  ///This function replaces the default [createState] function. Under the hood, [createEmpire] overrides
+  ///This function replaces the default [createState] function. Under the hood, [createCurrent] overrides
   ///the [createState] function. Overriding this function and the [createState] function can have
   ///unintended side affects.
-  EmpireState<EmpireWidget, T> createEmpire();
+  CurrentState<CurrentWidget, T> createCurrent();
 
-  ///Avoid overriding this function. [createEmpire] handles the creation of the widget state.
+  ///Avoid overriding this function. [createCurrent] handles the creation of the widget state.
   ///Overriding this function can have unintended side affects. You've been warned.
   @mustCallSuper
   @override
   State<StatefulWidget> createState() {
     // ignore: no_logic_in_create_state
-    return createEmpire();
+    return createCurrent();
   }
 }
 
-///Base class for your [EmpireWidget]s accompanying State class.
+///Base class for your [CurrentWidget]s accompanying State class.
 ///
-///Will automatically trigger a rebuild when any of this objects accompanying [EmpireViewModel]
+///Will automatically trigger a rebuild when any of this objects accompanying [CurrentViewModel]
 ///properties change.
 ///
 ///### Usage
 ///
 ///```dart
-///class _CounterPageState extends EmpireState<CounterPage, CounterViewModel> {
+///class _CounterPageState extends CurrentState<CounterPage, CounterViewModel> {
 ///  _CounterPageState(super.viewModel);
 ///
 ///  @override
@@ -86,7 +87,7 @@ abstract class EmpireWidget<T extends EmpireViewModel> extends StatefulWidget {
 ///  }
 ///}
 ///```
-abstract class EmpireState<T extends EmpireWidget, E extends EmpireViewModel>
+abstract class CurrentState<T extends CurrentWidget, E extends CurrentViewModel>
     extends State<T> {
   final E viewModel;
 
@@ -94,7 +95,7 @@ abstract class EmpireState<T extends EmpireWidget, E extends EmpireViewModel>
   ///a long running task
   bool get isBusy => viewModel.busy;
 
-  EmpireState(this.viewModel) {
+  CurrentState(this.viewModel) {
     WidgetsBinding.instance.addPostFrameCallback(
       (_) => viewModel.assignTo(widget.hashCode),
     );

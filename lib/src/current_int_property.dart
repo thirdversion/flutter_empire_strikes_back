@@ -1,36 +1,36 @@
-part of 'empire_property.dart';
+part of 'current_property.dart';
 
-/// An [EmpireProperty] with similar characteristics of dart [int] objects
+/// An [CurrentProperty] with similar characteristics of dart [int] objects
 ///
-/// The underlying value cannot be null. For a nullable int empire property,
-/// use the [EmpireNullableIntProperty].
+/// The underlying value cannot be null. For a nullable int current property,
+/// use the [CurrentNullableIntProperty].
 ///
 ///
-/// When the value of this changes, it will send a [EmpireStateChanged] event by default. This includes
+/// When the value of this changes, it will send a [CurrentStateChanged] event by default. This includes
 /// automatically triggering a UI rebuild.
 ///
 /// Example
 /// ```dart
 ///
-/// final age = EmpireIntProperty(10);
+/// final age = CurrentIntProperty(10);
 ///
 /// print('${age.add(5)}'); //prints 15
 /// ```
-class EmpireIntProperty extends EmpireProperty<int> {
-  EmpireIntProperty(super.value, {super.propertyName})
+class CurrentIntProperty extends CurrentProperty<int> {
+  CurrentIntProperty(super.value, {super.propertyName})
       : super(isPrimitiveType: true);
 
-  /// Factory constructor for initializing an [EmpireIntProperty] to zero.
+  /// Factory constructor for initializing an [CurrentIntProperty] to zero.
   ///
-  /// See [EmpireProperty] for [propertyName] usages.
+  /// See [CurrentProperty] for [propertyName] usages.
   ///
   /// ## Example
   ///
   /// ```dart
-  /// final numberOfFriends = EmpireIntProperty.zero();
+  /// final numberOfFriends = CurrentIntProperty.zero();
   /// ```
-  factory EmpireIntProperty.zero({String? propertyName}) {
-    return EmpireIntProperty(0, propertyName: propertyName);
+  factory CurrentIntProperty.zero({String? propertyName}) {
+    return CurrentIntProperty(0, propertyName: propertyName);
   }
 
   /// Returns true if the int value is odd
@@ -58,7 +58,7 @@ class EmpireIntProperty extends EmpireProperty<int> {
 
   /// Adds [other] to this number.
   ///
-  /// This does not set the value for this [EmpireIntProperty].
+  /// This does not set the value for this [CurrentIntProperty].
   ///
   /// The result is an [int], as described by [int.+],
   /// if both this number and [other] is an integer,
@@ -69,7 +69,7 @@ class EmpireIntProperty extends EmpireProperty<int> {
 
   /// Subtracts [other] from this number.
   ///
-  /// This does not set the value for this [EmpireIntProperty].
+  /// This does not set the value for this [CurrentIntProperty].
   ///
   /// The result is an [int], as described by [int.-],
   /// if both this number and [other] is an integer,
@@ -80,14 +80,14 @@ class EmpireIntProperty extends EmpireProperty<int> {
 
   /// Divides this number by [other].
   ///
-  /// This does not set the value for this [EmpireIntProperty].
+  /// This does not set the value for this [CurrentIntProperty].
   double divide<E extends num>(E other) {
     return _value / other;
   }
 
   /// Euclidean modulo of this number by [other].
   ///
-  /// This does not set the value for this [EmpireIntProperty].
+  /// This does not set the value for this [CurrentIntProperty].
   ///
   /// Returns the remainder of the Euclidean division.
   /// The Euclidean division of two integers `a` and `b`
@@ -107,7 +107,7 @@ class EmpireIntProperty extends EmpireProperty<int> {
   ///
   /// Example:
   /// ```dart
-  /// final number = EmpireIntProperty(5);
+  /// final number = CurrentIntProperty(5);
   /// print(number % 3); // 2
   /// ```
   E mod<E extends num>(E other) {
@@ -116,7 +116,7 @@ class EmpireIntProperty extends EmpireProperty<int> {
 
   /// Multiplies this number by [other].
   ///
-  /// This does not set the value for this [EmpireIntProperty].
+  /// This does not set the value for this [CurrentIntProperty].
   ///
   /// The result is an [int], as described by [int.*],
   /// if both this number and [other] are integers,
@@ -126,21 +126,21 @@ class EmpireIntProperty extends EmpireProperty<int> {
   }
 }
 
-/// An [EmpireProperty] with similar characteristics of dart [int] objects
+/// An [CurrentProperty] with similar characteristics of dart [int] objects
 ///
 /// The underlying value *can* be null.
 ///
 /// If the underlying value of this is null and an arithmetic operator is called on this,
-/// it will throw a [EmpirePropertyNullValueException].
+/// it will throw a [CurrentPropertyNullValueException].
 ///
 /// You can easily check for null by accessing the [isNull] or [isNotNull] properties.
 ///
-/// When the value of this changes, it will send a [EmpireStateChanged] event by default. This includes
+/// When the value of this changes, it will send a [CurrentStateChanged] event by default. This includes
 /// automatically triggering a UI rebuild.
 ///
 /// Example
 /// ```dart
-/// final age = EmpireNullableIntProperty();
+/// final age = CurrentNullableIntProperty();
 ///
 /// if (age.isNull)
 /// {
@@ -151,9 +151,9 @@ class EmpireIntProperty extends EmpireProperty<int> {
 /// Other Usages Examples
 /// ```dart
 ///
-/// final age = EmpireNullableIntProperty();
+/// final age = CurrentNullableIntProperty();
 ///
-/// print('${age.add(5)}'); //throws EmpireNullValueException because no value has been set yet.
+/// print('${age.add(5)}'); //throws CurrentNullValueException because no value has been set yet.
 ///
 /// age(10)
 ///
@@ -161,21 +161,21 @@ class EmpireIntProperty extends EmpireProperty<int> {
 ///
 /// ```
 ///
-class EmpireNullableIntProperty extends EmpireProperty<int?> {
-  EmpireNullableIntProperty({int? value, super.propertyName})
+class CurrentNullableIntProperty extends CurrentProperty<int?> {
+  CurrentNullableIntProperty({int? value, super.propertyName})
       : super(value, isPrimitiveType: true);
 
-  /// Factory constructor for initializing an [EmpireNullableIntProperty] to zero.
+  /// Factory constructor for initializing an [CurrentNullableIntProperty] to zero.
   ///
-  /// See [EmpireProperty] for [propertyName] usages.
+  /// See [CurrentProperty] for [propertyName] usages.
   ///
   /// ## Example
   ///
   /// ```dart
-  /// final numberOfFriends = EmpireNullableIntProperty.zero();
+  /// final numberOfFriends = CurrentNullableIntProperty.zero();
   /// ```
-  factory EmpireNullableIntProperty.zero({String? propertyName}) {
-    return EmpireNullableIntProperty(value: 0, propertyName: propertyName);
+  factory CurrentNullableIntProperty.zero({String? propertyName}) {
+    return CurrentNullableIntProperty(value: 0, propertyName: propertyName);
   }
 
   /// Returns true if the int value is odd
@@ -205,9 +205,9 @@ class EmpireNullableIntProperty extends EmpireProperty<int?> {
 
   /// Adds [other] to this number.
   ///
-  /// This does not set the value for this [EmpireNullableIntProperty].
+  /// This does not set the value for this [CurrentNullableIntProperty].
   ///
-  /// If the underlying value is [null] throws an [EmpirePropertyNullValueException].
+  /// If the underlying value is [null] throws an [CurrentPropertyNullValueException].
   ///
   /// The result is an [int], as described by [int.+],
   /// if both this number and [other] is an integer,
@@ -215,15 +215,15 @@ class EmpireNullableIntProperty extends EmpireProperty<int?> {
   E add<E extends num>(E other) {
     return isNotNull
         ? (_value! + other) as E
-        : throw EmpirePropertyNullValueException(
+        : throw CurrentPropertyNullValueException(
             StackTrace.current, propertyName, runtimeType);
   }
 
   /// Subtracts [other] from this number.
   ///
-  /// This does not set the value for this [EmpireNullableIntProperty].
+  /// This does not set the value for this [CurrentNullableIntProperty].
   ///
-  /// If the underlying value is [null] throws an [EmpirePropertyNullValueException].
+  /// If the underlying value is [null] throws an [CurrentPropertyNullValueException].
   ///
   /// The result is an [int], as described by [int.-],
   /// if both this number and [other] is an integer,
@@ -231,25 +231,25 @@ class EmpireNullableIntProperty extends EmpireProperty<int?> {
   E subtract<E extends num>(E other) {
     return isNotNull
         ? (_value! - other) as E
-        : throw EmpirePropertyNullValueException(
+        : throw CurrentPropertyNullValueException(
             StackTrace.current, propertyName, runtimeType);
   }
 
   /// Divides this number by [other].
   ///
-  /// This does not set the value for this [EmpireNullableIntProperty].
+  /// This does not set the value for this [CurrentNullableIntProperty].
   ///
-  /// If the underlying value is [null] throws an [EmpirePropertyNullValueException].
+  /// If the underlying value is [null] throws an [CurrentPropertyNullValueException].
   double divide<E extends num>(E other) {
     return isNotNull
         ? _value! / other
-        : throw EmpirePropertyNullValueException(
+        : throw CurrentPropertyNullValueException(
             StackTrace.current, propertyName, runtimeType);
   }
 
   /// Euclidean modulo of this number by [other].
   ///
-  /// This does not set the value for this [EmpireNullableIntProperty].
+  /// This does not set the value for this [CurrentNullableIntProperty].
   ///
   /// Returns the remainder of the Euclidean division.
   /// The Euclidean division of two integers `a` and `b`
@@ -267,33 +267,33 @@ class EmpireNullableIntProperty extends EmpireProperty<int?> {
   /// if both this number and [other] are integers,
   /// otherwise the result is a [double].
   ///
-  /// If the underlying value is [null] throws an [EmpirePropertyNullValueException].
+  /// If the underlying value is [null] throws an [CurrentPropertyNullValueException].
   ///
   /// Example:
   /// ```dart
-  /// final number = EmpireNullableIntProperty(5);
+  /// final number = CurrentNullableIntProperty(5);
   /// print(number % 3); // 2
   /// ```
   E mod<E extends num>(E other) {
     return isNotNull
         ? (_value! % other) as E
-        : throw EmpirePropertyNullValueException(
+        : throw CurrentPropertyNullValueException(
             StackTrace.current, propertyName, runtimeType);
   }
 
   /// Multiplies this number by [other].
   ///
-  /// This does not set the value for this [EmpireNullableIntProperty].
+  /// This does not set the value for this [CurrentNullableIntProperty].
   ///
   /// The result is an [int], as described by [int.*],
   /// if both this number and [other] are integers,
   /// otherwise the result is a [double].
   ///
-  /// If the underlying value is [null] throws an [EmpirePropertyNullValueException].
+  /// If the underlying value is [null] throws an [CurrentPropertyNullValueException].
   E multiply<E extends num>(E other) {
     return isNotNull
         ? (_value! * other) as E
-        : throw EmpirePropertyNullValueException(
+        : throw CurrentPropertyNullValueException(
             StackTrace.current, propertyName, runtimeType);
   }
 }

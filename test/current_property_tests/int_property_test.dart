@@ -1,27 +1,27 @@
-import 'package:empire/empire.dart';
+import 'package:current/current.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-class IntViewModel extends EmpireViewModel {
-  final age = EmpireIntProperty(10);
+class IntViewModel extends CurrentViewModel {
+  final age = CurrentIntProperty(10);
 
   @override
-  Iterable<EmpireProperty> get empireProps => [age];
+  Iterable<CurrentProperty> get currentProps => [age];
 }
 
-class IntTestWidget extends EmpireWidget<IntViewModel> {
+class IntTestWidget extends CurrentWidget<IntViewModel> {
   const IntTestWidget({
     Key? key,
     required IntViewModel viewModel,
   }) : super(key: key, viewModel: viewModel);
 
   @override
-  EmpireState<EmpireWidget<EmpireViewModel>, IntViewModel> createEmpire() {
+  CurrentState<CurrentWidget<CurrentViewModel>, IntViewModel> createCurrent() {
     return _IntTestWidgetState(viewModel);
   }
 }
 
-class _IntTestWidgetState extends EmpireState<IntTestWidget, IntViewModel> {
+class _IntTestWidgetState extends CurrentState<IntTestWidget, IntViewModel> {
   _IntTestWidgetState(super.viewModel);
 
   @override
@@ -44,15 +44,15 @@ class _IntTestWidgetState extends EmpireState<IntTestWidget, IntViewModel> {
   }
 }
 
-class NullableIntViewModel extends EmpireViewModel {
-  final age = EmpireNullableIntProperty(value: 10);
+class NullableIntViewModel extends CurrentViewModel {
+  final age = CurrentNullableIntProperty(value: 10);
 
   @override
-  Iterable<EmpireProperty> get empireProps => [age];
+  Iterable<CurrentProperty> get currentProps => [age];
 }
 
 void main() {
-  group('EmpireIntProperty Tests', () {
+  group('CurrentIntProperty Tests', () {
     late IntViewModel viewModel;
     late IntTestWidget testWidget;
 
@@ -212,7 +212,7 @@ void main() {
 
     test('add - other is int - returns correct int value', () {
       const expected = 2;
-      final number = EmpireIntProperty(1);
+      final number = CurrentIntProperty(1);
       final result = number.add(1);
 
       expect(result, equals(expected));
@@ -220,7 +220,7 @@ void main() {
 
     test('add - other is double - returns correct double value', () {
       const expected = 2.5;
-      final number = EmpireIntProperty(1);
+      final number = CurrentIntProperty(1);
       final result = number.add(1.5);
 
       expect(result, equals(expected));
@@ -228,7 +228,7 @@ void main() {
 
     test('subtract - other is int - returns correct int value', () {
       const expected = 2;
-      final number = EmpireIntProperty(3);
+      final number = CurrentIntProperty(3);
       final result = number.subtract(1);
 
       expect(result, equals(expected));
@@ -236,7 +236,7 @@ void main() {
 
     test('subtract - other is double - returns correct double value', () {
       const expected = 2.5;
-      final number = EmpireIntProperty(4);
+      final number = CurrentIntProperty(4);
       final result = number.subtract(1.5);
 
       expect(result, equals(expected));
@@ -244,7 +244,7 @@ void main() {
 
     test('multiply - other is int - returns correct int value', () {
       const expected = 4;
-      final number = EmpireIntProperty(2);
+      final number = CurrentIntProperty(2);
       final result = number.multiply(2);
 
       expect(result, equals(expected));
@@ -252,7 +252,7 @@ void main() {
 
     test('multiply - other is double - returns correct double value', () {
       const expected = 5.4;
-      final number = EmpireIntProperty(2);
+      final number = CurrentIntProperty(2);
       final result = number.multiply(2.7);
 
       expect(result, equals(expected));
@@ -260,7 +260,7 @@ void main() {
 
     test('divide - returns correct double value', () {
       const expected = 4.0;
-      final number = EmpireIntProperty(8);
+      final number = CurrentIntProperty(8);
       final result = number.divide(2);
 
       expect(result, equals(expected));
@@ -268,7 +268,7 @@ void main() {
 
     test('mod - other is int - returns correct int value', () {
       const expected = 2;
-      final number = EmpireIntProperty(5);
+      final number = CurrentIntProperty(5);
       final result = number.mod(3);
 
       expect(result, equals(expected));
@@ -276,7 +276,7 @@ void main() {
 
     test('mod - other is double - returns correct double value', () {
       const expected = 1.5;
-      final number = EmpireIntProperty(5);
+      final number = CurrentIntProperty(5);
       final result = number.mod(3.5);
 
       expect(result, equals(expected));

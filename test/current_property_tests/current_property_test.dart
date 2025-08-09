@@ -1,29 +1,30 @@
-import 'package:empire/empire.dart';
-import 'package:empire/src/empire_exceptions.dart';
+import 'package:current/current.dart';
+import 'package:current/src/current_exceptions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-class _TestViewModel extends EmpireViewModel {
-  final EmpireProperty<String?> name = EmpireProperty(null);
-  final EmpireProperty<int> age = EmpireProperty(1);
+class _TestViewModel extends CurrentViewModel {
+  final CurrentProperty<String?> name = CurrentProperty(null);
+  final CurrentProperty<int> age = CurrentProperty(1);
 
   @override
-  Iterable<EmpireProperty> get empireProps => [name, age];
+  Iterable<CurrentProperty> get currentProps => [name, age];
 }
 
-class _MyWidget extends EmpireWidget<_TestViewModel> {
+class _MyWidget extends CurrentWidget<_TestViewModel> {
   const _MyWidget({
     Key? key,
     required _TestViewModel viewModel,
   }) : super(key: key, viewModel: viewModel);
 
   @override
-  EmpireState<EmpireWidget<EmpireViewModel>, _TestViewModel> createEmpire() {
+  CurrentState<CurrentWidget<CurrentViewModel>, _TestViewModel>
+      createCurrent() {
     return _MyWidgetState(viewModel);
   }
 }
 
-class _MyWidgetState extends EmpireState<_MyWidget, _TestViewModel> {
+class _MyWidgetState extends CurrentState<_MyWidget, _TestViewModel> {
   _MyWidgetState(super.viewModel);
 
   @override
@@ -57,81 +58,81 @@ void main() {
 
   group('Property Creation Tests', () {
     test('createNullProperty - Value is Null', () {
-      final age = EmpireProperty<int?>(null);
+      final age = CurrentProperty<int?>(null);
       expect(age.value, isNull);
     });
 
     test('createProperty - passed value equals property value', () {
       const expectedValue = 10;
-      final age = EmpireProperty<int>(expectedValue);
+      final age = CurrentProperty<int>(expectedValue);
       expect(age.value, equals(expectedValue));
     });
 
     test('createProperty - set optional property name', () {
       const expectedValue = 'age';
-      final age = EmpireProperty<int>(10, propertyName: expectedValue);
+      final age = CurrentProperty<int>(10, propertyName: expectedValue);
       expect(age.propertyName, equals(expectedValue));
     });
   });
 
-  group('EmpireProperty Equality Tests', () {
+  group('CurrentProperty Equality Tests', () {
     test('equals - other is same value - are equal', () {
-      final ageOne = EmpireProperty<int>(10);
+      final ageOne = CurrentProperty<int>(10);
       const int ageTwo = 10;
 
       expect(ageOne.equals(ageTwo), isTrue);
     });
 
     test('equals - other is different value - are not equal', () {
-      final ageOne = EmpireProperty<int>(10);
+      final ageOne = CurrentProperty<int>(10);
       const int ageTwo = 5;
 
       expect(ageOne.equals(ageTwo), isFalse);
     });
 
-    test('equals - other is EmpireProperty with same value - are equal', () {
-      final ageOne = EmpireProperty<int>(10);
-      final ageTwo = EmpireProperty<int>(10);
+    test('equals - other is CurrentProperty with same value - are equal', () {
+      final ageOne = CurrentProperty<int>(10);
+      final ageTwo = CurrentProperty<int>(10);
 
       expect(ageOne.equals(ageTwo), isTrue);
     });
 
     test(
-        'equals - other is EmpireProperty with different value - are not equal',
+        'equals - other is CurrentProperty with different value - are not equal',
         () {
-      final ageOne = EmpireProperty<int>(10);
-      final ageTwo = EmpireProperty<int>(5);
+      final ageOne = CurrentProperty<int>(10);
+      final ageTwo = CurrentProperty<int>(5);
 
       expect(ageOne.equals(ageTwo), isFalse);
     });
 
-    test('equals - other is EmpireProperty with same value - are equal', () {
-      final ageOne = EmpireProperty<int>(10);
+    test('equals - other is CurrentProperty with same value - are equal', () {
+      final ageOne = CurrentProperty<int>(10);
       const double ageTwo = 10.0;
 
       expect(ageOne.equals(ageTwo), isTrue);
     });
 
-    test('equality - other is EmpireProperty with same value - are equal', () {
-      final ageOne = EmpireProperty<int>(10);
-      final ageTwo = EmpireProperty<int>(10);
+    test('equality - other is CurrentProperty with same value - are equal', () {
+      final ageOne = CurrentProperty<int>(10);
+      final ageTwo = CurrentProperty<int>(10);
 
       expect(ageOne == ageTwo, isTrue);
     });
 
     test(
-        'equality - other is EmpireProperty with different value - are not equal',
+        'equality - other is CurrentProperty with different value - are not equal',
         () {
-      final ageOne = EmpireProperty<int>(10);
-      final ageTwo = EmpireProperty<int>(5);
+      final ageOne = CurrentProperty<int>(10);
+      final ageTwo = CurrentProperty<int>(5);
 
       expect(ageOne == ageTwo, isFalse);
     });
 
     test(
-        'equality - other is same as EmpireProperty generic type argument with same value - are equal',
+        'equality - other is same as CurrentProperty generic type argument with same value - are equal',
         () {
-      final ageOne = EmpireProperty<int>(10);
+      final ageOne = CurrentProperty<int>(10);
       const int ageTwo = 10;
 
       // ignore: unrelated_type_equality_checks
@@ -139,9 +140,9 @@ void main() {
     });
 
     test(
-        'equality - other is same as EmpireProperty generic type argument with different value - are not equal',
+        'equality - other is same as CurrentProperty generic type argument with different value - are not equal',
         () {
-      final ageOne = EmpireProperty<int>(10);
+      final ageOne = CurrentProperty<int>(10);
       const int ageTwo = 5;
 
       // ignore: unrelated_type_equality_checks
@@ -149,9 +150,9 @@ void main() {
     });
 
     test(
-        'equality - other is not EmpireProperty or generic type argument - are not equal',
+        'equality - other is not CurrentProperty or generic type argument - are not equal',
         () {
-      final ageOne = EmpireProperty<int>(10);
+      final ageOne = CurrentProperty<int>(10);
       const String name = 'Bob';
 
       // ignore: unrelated_type_equality_checks
@@ -159,32 +160,32 @@ void main() {
     });
 
     test('isNull - value is null - returns true', () {
-      final nullName = EmpireProperty<String?>(null);
+      final nullName = CurrentProperty<String?>(null);
       expect(nullName.isNull, isTrue);
     });
 
     test('isNull - value is not null - returns false', () {
-      final nullName = EmpireProperty<String>('Bob');
+      final nullName = CurrentProperty<String>('Bob');
       expect(nullName.isNull, isFalse);
     });
 
     test('isNotNull - value is not null - returns true', () {
-      final nullName = EmpireProperty<String>('Bob');
+      final nullName = CurrentProperty<String>('Bob');
       expect(nullName.isNotNull, isTrue);
     });
 
     test('isNotNull - value is null - returns false', () {
-      final nullName = EmpireProperty<String?>(null);
+      final nullName = CurrentProperty<String?>(null);
       expect(nullName.isNotNull, isFalse);
     });
 
     test(
-        'set - property not assigned to viewModel - throws PropertyNotAssignedToEmpireViewModelException',
+        'set - property not assigned to viewModel - throws PropertyNotAssignedToCurrentViewModelException',
         () {
-      final property = EmpireProperty<String?>(null);
+      final property = CurrentProperty<String?>(null);
 
       expect(() => property('Bob'),
-          throwsA(isA<PropertyNotAssignedToEmpireViewModelException>()));
+          throwsA(isA<PropertyNotAssignedToCurrentViewModelException>()));
     });
   });
 
@@ -193,7 +194,7 @@ void main() {
         'setOriginalToCurrent - update original value - reset sets value to updated original ',
         () {
       const String expectedValue = 'Bob';
-      final name = EmpireProperty<String?>(null);
+      final name = CurrentProperty<String?>(null);
       name.setViewModel(viewModel);
       name(expectedValue);
 
@@ -213,7 +214,7 @@ void main() {
         'setAsOriginal - argument is false - original not set to current value',
         () {
       const String expected = 'Bob';
-      final name = EmpireProperty<String?>(expected);
+      final name = CurrentProperty<String?>(expected);
       name.setViewModel(viewModel);
 
       name('Steve', setAsOriginal: false);
@@ -224,7 +225,7 @@ void main() {
     test('setAsOriginal - argument is true - original is set to current value',
         () {
       const String expected = 'Steve';
-      final name = EmpireProperty<String?>('Bob');
+      final name = CurrentProperty<String?>('Bob');
       name.setViewModel(viewModel);
 
       name(expected, setAsOriginal: true);

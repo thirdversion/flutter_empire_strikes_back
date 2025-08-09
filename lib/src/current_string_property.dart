@@ -1,24 +1,24 @@
-part of 'empire_property.dart';
+part of 'current_property.dart';
 
-///An [EmpireProperty] with similar characteristics as a dart [String] object
+///An [CurrentProperty] with similar characteristics as a dart [String] object
 ///
-///When the value of this changes, it will send a [EmpireStateChanged] event by default. This includes
+///When the value of this changes, it will send a [CurrentStateChanged] event by default. This includes
 ///automatically triggering a UI rebuild.
-class EmpireStringProperty extends EmpireProperty<String> {
-  EmpireStringProperty(super.value, {super.propertyName})
+class CurrentStringProperty extends CurrentProperty<String> {
+  CurrentStringProperty(super.value, {super.propertyName})
       : super(isPrimitiveType: true);
 
-  ///Factory constructor for initializing an [EmpireStringProperty] to an empty [String].
+  ///Factory constructor for initializing an [CurrentStringProperty] to an empty [String].
   ///
-  ///See [EmpireProperty] for [propertyName] usages.
+  ///See [CurrentProperty] for [propertyName] usages.
   ///
   ///## Example
   ///
   ///```dart
-  ///final title = EmpireStringProperty.empty();
+  ///final title = CurrentStringProperty.empty();
   ///```
-  factory EmpireStringProperty.empty({String? propertyName}) {
-    return EmpireStringProperty('', propertyName: propertyName);
+  factory CurrentStringProperty.empty({String? propertyName}) {
+    return CurrentStringProperty('', propertyName: propertyName);
   }
 
   ///Whether the string value is empty
@@ -34,14 +34,14 @@ class EmpireStringProperty extends EmpireProperty<String> {
   ///
   /// Example:
   /// ```dart
-  /// const string = EmpireStringProperty('Doug');
+  /// const string = CurrentStringProperty('Doug');
   /// final containsD = string.contains('D'); // true
   /// final containsUpperCase = string.contains(RegExp(r'[A-Z]')); // true
   /// ```
   /// If [startIndex] is provided, this method matches only at or after that
   /// index:
   /// ```dart
-  /// const string = EmpireStringProperty('Doug smith');
+  /// const string = CurrentStringProperty('Doug smith');
   /// final containsD = string.contains(RegExp('D'), 0); // true
   /// final caseSensitive = string.contains(RegExp(r'[A-Z]'), 1); // false
   /// ```
@@ -53,7 +53,7 @@ class EmpireStringProperty extends EmpireProperty<String> {
   ///
   /// Example:
   /// ```dart
-  /// const string = EmpireStringProperty('dougsmith');
+  /// const string = CurrentStringProperty('dougsmith');
   /// var result = string.substring(1); // 'ougsmith'
   /// result = string.substring(1, 3); // 'oug'
   /// ```
@@ -63,16 +63,16 @@ class EmpireStringProperty extends EmpireProperty<String> {
   String substring(int start, [int? end]) => _value.substring(start, end);
 }
 
-///An [EmpireProperty] with similar characteristics as a dart [String] object
+///An [CurrentProperty] with similar characteristics as a dart [String] object
 ///
 ///The underlying value *can* be null.
 ///
 ///You can easily check for null by accessing the [isNull] or [isNotNull] properties.
 ///
-///When the value of this changes, it will send a [EmpireStateChanged] event by default. This includes
+///When the value of this changes, it will send a [CurrentStateChanged] event by default. This includes
 ///automatically triggering a UI rebuild.
-class EmpireNullableStringProperty extends EmpireProperty<String?> {
-  EmpireNullableStringProperty({String? value, super.propertyName})
+class CurrentNullableStringProperty extends CurrentProperty<String?> {
+  CurrentNullableStringProperty({String? value, super.propertyName})
       : super(value, isPrimitiveType: true);
 
   ///Whether the string value is empty
@@ -96,14 +96,14 @@ class EmpireNullableStringProperty extends EmpireProperty<String?> {
   ///
   /// Example:
   /// ```dart
-  /// const string = EmpireStringProperty('Doug');
+  /// const string = CurrentStringProperty('Doug');
   /// final containsD = string.contains('D'); // true
   /// final containsUpperCase = string.contains(RegExp(r'[A-Z]')); // true
   /// ```
   /// If [startIndex] is provided, this method matches only at or after that
   /// index:
   /// ```dart
-  /// const string = EmpireStringProperty('Doug smith');
+  /// const string = CurrentStringProperty('Doug smith');
   /// final containsD = string.contains(RegExp('D'), 0); // true
   /// final caseSensitive = string.contains(RegExp(r'[A-Z]'), 1); // false
   /// ```
@@ -117,7 +117,7 @@ class EmpireNullableStringProperty extends EmpireProperty<String?> {
   ///
   /// Example:
   /// ```dart
-  /// const string = EmpireStringProperty('dougsmith');
+  /// const string = CurrentStringProperty('dougsmith');
   /// var result = string.substring(1); // 'ougsmith'
   /// result = string.substring(1, 3); // 'oug'
   /// ```

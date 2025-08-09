@@ -1,10 +1,10 @@
 {
-  "name": "empire-flutter-snippets",
-  "displayName": "Empire Flutter Snippets",
-  "description": "Helpful code snippets for the Flutter Empire State Management package to quickly create Empire Widgets and EmpireViewModels.",
+  "name": "current-flutter-snippets",
+  "displayName": "Current Flutter Snippets",
+  "description": "Helpful code snippets for the Flutter Current State Management package to quickly create Current Widgets and CurrentViewModels.",
   "publisher": "StriveBusinessSolutions",
   "version": "0.1.2",
-  "repository": "https://github.com/strivesolutions/flutter_empire/tree/main/vscode_extensions/empire-flutter-snippets",
+  "repository": "https://github.com/strivesolutions/flutter_current/tree/main/vscode_extensions/current-flutter-snippets",
   "engines": {
     "vscode": "^1.70.0"
   },

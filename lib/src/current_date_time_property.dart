@@ -1,32 +1,32 @@
-part of 'empire_property.dart';
+part of 'current_property.dart';
 
-///An [EmpireProperty] with similar characteristics as a an
+///An [CurrentProperty] with similar characteristics as a an
 ///ordinary dart [DateTime] object
 ///
 ///Then underlying DateTime value cannot be null
 ///
-///When the value of this changes, it will send a [EmpireStateChanged] event by default. This includes
+///When the value of this changes, it will send a [CurrentStateChanged] event by default. This includes
 ///automatically triggering a UI rebuild.
-class EmpireDateTimeProperty extends EmpireProperty<DateTime> {
-  EmpireDateTimeProperty(super.value, {super.propertyName})
+class CurrentDateTimeProperty extends CurrentProperty<DateTime> {
+  CurrentDateTimeProperty(super.value, {super.propertyName})
       : super(isPrimitiveType: true);
 
-  ///Factory constructor for initializing an [EmpireDateTimeProperty] to the current Date/Time.
+  ///Factory constructor for initializing an [CurrentDateTimeProperty] to the current Date/Time.
   ///
-  ///See [EmpireProperty] for [propertyName] usages.
+  ///See [CurrentProperty] for [propertyName] usages.
   ///
   ///## Example
   ///
   ///```dart
-  ///final today = EmpireDateTimeProperty.now();
+  ///final today = CurrentDateTimeProperty.now();
   ///```
-  factory EmpireDateTimeProperty.now({String? propertyName}) {
-    return EmpireDateTimeProperty(DateTime.now(), propertyName: propertyName);
+  factory CurrentDateTimeProperty.now({String? propertyName}) {
+    return CurrentDateTimeProperty(DateTime.now(), propertyName: propertyName);
   }
 
-  /// Constructs a new [EmpireDateTimeProperty] instance based on [formattedString].
+  /// Constructs a new [CurrentDateTimeProperty] instance based on [formattedString].
   ///
-  //////See [EmpireProperty] for [propertyName] usages.
+  //////See [CurrentProperty] for [propertyName] usages.
   ///
   /// Throws a [FormatException] if the input string cannot be parsed.
   ///
@@ -87,11 +87,11 @@ class EmpireDateTimeProperty extends EmpireProperty<DateTime> {
   /// To detect and reject invalid component values, use
   /// [DateFormat.parseStrict](https://pub.dev/documentation/intl/latest/intl/DateFormat/parseStrict.html)
   /// from the [intl](https://pub.dev/packages/intl) package.
-  static EmpireDateTimeProperty parse(String formattedString,
+  static CurrentDateTimeProperty parse(String formattedString,
       {String? propertyName}) {
     final dateTime = DateTime.parse(formattedString);
 
-    return EmpireDateTimeProperty(dateTime, propertyName: propertyName);
+    return CurrentDateTimeProperty(dateTime, propertyName: propertyName);
   }
 
   /// The year.
@@ -355,36 +355,36 @@ class EmpireDateTimeProperty extends EmpireProperty<DateTime> {
   Duration difference(DateTime other) => _value.difference(other);
 }
 
-///An [EmpireProperty] with similar characteristics as a an
+///An [CurrentProperty] with similar characteristics as a an
 ///ordinary dart bool object.
 ///
 ///Then underlying bool value *CAN* be null
 ///
-///When the value of this changes, it will send a [EmpireStateChanged] event by default. This includes
+///When the value of this changes, it will send a [CurrentStateChanged] event by default. This includes
 ///automatically triggering a UI rebuild.
-class EmpireNullableDateTimeProperty extends EmpireProperty<DateTime?> {
-  EmpireNullableDateTimeProperty({DateTime? value, super.propertyName})
+class CurrentNullableDateTimeProperty extends CurrentProperty<DateTime?> {
+  CurrentNullableDateTimeProperty({DateTime? value, super.propertyName})
       : super(value, isPrimitiveType: true);
 
-  ///Factory constructor for initializing an [EmpireNullableDateTimeProperty] to the current Date/Time.
+  ///Factory constructor for initializing an [CurrentNullableDateTimeProperty] to the current Date/Time.
   ///
-  ///See [EmpireProperty] for [propertyName] usages.
+  ///See [CurrentProperty] for [propertyName] usages.
   ///
   ///## Example
   ///
   ///```dart
-  ///final today = EmpireDateTimeProperty.now();
+  ///final today = CurrentDateTimeProperty.now();
   ///```
-  factory EmpireNullableDateTimeProperty.now({String? propertyName}) {
-    return EmpireNullableDateTimeProperty(
+  factory CurrentNullableDateTimeProperty.now({String? propertyName}) {
+    return CurrentNullableDateTimeProperty(
       value: DateTime.now(),
       propertyName: propertyName,
     );
   }
 
-  /// Constructs a new [EmpireNullableDateTimeProperty] instance based on [formattedString].
+  /// Constructs a new [CurrentNullableDateTimeProperty] instance based on [formattedString].
   ///
-  //////See [EmpireProperty] for [propertyName] usages.
+  //////See [CurrentProperty] for [propertyName] usages.
   ///
   /// Throws a [FormatException] if the input string cannot be parsed.
   ///
@@ -445,24 +445,24 @@ class EmpireNullableDateTimeProperty extends EmpireProperty<DateTime?> {
   /// To detect and reject invalid component values, use
   /// [DateFormat.parseStrict](https://pub.dev/documentation/intl/latest/intl/DateFormat/parseStrict.html)
   /// from the [intl](https://pub.dev/packages/intl) package.
-  static EmpireNullableDateTimeProperty parse(String formattedString,
+  static CurrentNullableDateTimeProperty parse(String formattedString,
       {String? propertyName}) {
     final dateTime = DateTime.parse(formattedString);
 
-    return EmpireNullableDateTimeProperty(
+    return CurrentNullableDateTimeProperty(
       value: dateTime,
       propertyName: propertyName,
     );
   }
 
-  // Constructs a new [EmpireNullableDateTimeProperty] instance based on [formattedString].
+  // Constructs a new [CurrentNullableDateTimeProperty] instance based on [formattedString].
   ///
   /// Works like [parse] except that this function returns `null`
   /// where [parse] would throw a [FormatException].
-  static EmpireNullableDateTimeProperty tryParse(String formattedString,
+  static CurrentNullableDateTimeProperty tryParse(String formattedString,
       {String? propertyName}) {
     final dateTime = DateTime.tryParse(formattedString);
-    return EmpireNullableDateTimeProperty(
+    return CurrentNullableDateTimeProperty(
       value: dateTime,
       propertyName: propertyName,
     );

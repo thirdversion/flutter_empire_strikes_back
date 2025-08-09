@@ -1,35 +1,35 @@
-import 'package:empire/empire.dart';
-import 'package:empire/src/empire_exceptions.dart';
+import 'package:current/current.dart';
+import 'package:current/src/current_exceptions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'dart:math' as math;
 
-class _ApplicationViewModel extends EmpireViewModel {
-  final changed = EmpireProperty<bool>(false, propertyName: 'changed');
+class _ApplicationViewModel extends CurrentViewModel {
+  final changed = CurrentProperty<bool>(false, propertyName: 'changed');
 
   void change() => changed(!changed.value);
 
   @override
-  Iterable<EmpireProperty> get empireProps => [changed];
+  Iterable<CurrentProperty> get currentProps => [changed];
 }
 
-class _ApplicationSubViewModel extends EmpireViewModel {
-  final viewModelName = EmpireStringProperty('SubViewModel');
+class _ApplicationSubViewModel extends CurrentViewModel {
+  final viewModelName = CurrentStringProperty('SubViewModel');
 
   @override
-  Iterable<EmpireProperty> get empireProps => [viewModelName];
+  Iterable<CurrentProperty> get currentProps => [viewModelName];
 }
 
-class _TestViewModel extends EmpireViewModel {
-  final firstName = EmpireProperty<String?>(null);
-  final lastName = EmpireProperty<String?>(null);
-  final age = EmpireIntProperty(1);
+class _TestViewModel extends CurrentViewModel {
+  final firstName = CurrentProperty<String?>(null);
+  final lastName = CurrentProperty<String?>(null);
+  final age = CurrentIntProperty(1);
 
   @override
-  Iterable<EmpireProperty> get empireProps => [firstName, lastName, age];
+  Iterable<CurrentProperty> get currentProps => [firstName, lastName, age];
 }
 
-class _MyWidget extends EmpireWidget<_TestViewModel> {
+class _MyWidget extends CurrentWidget<_TestViewModel> {
   final _ApplicationViewModel applicationViewModel;
   final _ApplicationSubViewModel appSubViewModel;
   const _MyWidget({
@@ -40,24 +40,25 @@ class _MyWidget extends EmpireWidget<_TestViewModel> {
   }) : super(key: key, viewModel: viewModel);
 
   @override
-  EmpireState<EmpireWidget<EmpireViewModel>, _TestViewModel> createEmpire() {
+  CurrentState<CurrentWidget<CurrentViewModel>, _TestViewModel>
+      createCurrent() {
     return _MyWidgetState(viewModel);
   }
 }
 
-class _MyWidgetState extends EmpireState<_MyWidget, _TestViewModel> {
+class _MyWidgetState extends CurrentState<_MyWidget, _TestViewModel> {
   _MyWidgetState(super.viewModel);
 
   @override
   Widget build(BuildContext context) {
-    return Empire<_ApplicationViewModel>(
+    return Current<_ApplicationViewModel>(
       widget.applicationViewModel,
       onAppStateChanged: () => math.Random().nextInt(1000000).toString(),
       child: MaterialApp(
         home: Scaffold(
           body: Builder(
             builder: (outerContext) {
-              return Empire(
+              return Current(
                 widget.appSubViewModel,
                 onAppStateChanged: () =>
                     math.Random().nextInt(1000000).toString(),
@@ -71,9 +72,9 @@ class _MyWidgetState extends EmpireState<_MyWidget, _TestViewModel> {
                           viewModel.age.value.toString(),
                         ),
                         Text(
-                            '${Empire.of<_ApplicationViewModel>(outerContext).viewModel().changed}'),
+                            '${Current.of<_ApplicationViewModel>(outerContext).viewModel().changed}'),
                         Text(
-                            '${Empire.of<_ApplicationSubViewModel>(innerContext).viewModel().viewModelName}')
+                            '${Current.of<_ApplicationSubViewModel>(innerContext).viewModel().viewModelName}')
                       ],
                     ),
                   );
@@ -87,7 +88,8 @@ class _MyWidgetState extends EmpireState<_MyWidget, _TestViewModel> {
   }
 }
 
-class _TestPreventReassignViewModelWidget extends EmpireWidget<_TestViewModel> {
+class _TestPreventReassignViewModelWidget
+    extends CurrentWidget<_TestViewModel> {
   final _ApplicationViewModel applicationViewModel;
   final _ApplicationSubViewModel appSubViewModel;
   const _TestPreventReassignViewModelWidget({
@@ -98,12 +100,12 @@ class _TestPreventReassignViewModelWidget extends EmpireWidget<_TestViewModel> {
   }) : super(key: key, viewModel: viewModel);
 
   @override
-  EmpireState<EmpireWidget<EmpireViewModel>, _TestViewModel> createEmpire() =>
-      _TestPreventReassignViewModelWidgetState(viewModel);
+  CurrentState<CurrentWidget<CurrentViewModel>, _TestViewModel>
+      createCurrent() => _TestPreventReassignViewModelWidgetState(viewModel);
 }
 
 class _TestPreventReassignViewModelWidgetState
-    extends EmpireState<_TestPreventReassignViewModelWidget, _TestViewModel> {
+    extends CurrentState<_TestPreventReassignViewModelWidget, _TestViewModel> {
   _TestPreventReassignViewModelWidgetState(super.viewModel);
 
   @override
@@ -140,7 +142,7 @@ void main() {
       );
     });
     testWidgets(
-        'EmpireWidget Test - Finds Correct Text Widget After Property Change',
+        'CurrentWidget Test - Finds Correct Text Widget After Property Change',
         (tester) async {
       viewModel.firstName("John");
       await tester.pumpWidget(mainWidget);
@@ -154,7 +156,7 @@ void main() {
     });
 
     testWidgets(
-        'Empire App State Test - Widgets Update on App View Model Change',
+        'Current App State Test - Widgets Update on App View Model Change',
         (tester) async {
       await tester.pumpWidget(mainWidget);
 
@@ -224,14 +226,14 @@ void main() {
       expect(find.text(newAge.toString()), findsOneWidget);
     });
 
-    testWidgets('EmpireWidget Test - Finds Sub Application View Model',
+    testWidgets('CurrentWidget Test - Finds Sub Application View Model',
         (tester) async {
       await tester.pumpWidget(mainWidget);
 
       expect(find.text(subViewModel.viewModelName.value), findsOneWidget);
     });
 
-    testWidgets('EmpireWidget Test - Finds Sub Application View Model',
+    testWidgets('CurrentWidget Test - Finds Sub Application View Model',
         (tester) async {
       await tester.pumpWidget(mainWidget);
 
@@ -239,7 +241,7 @@ void main() {
     });
 
     testWidgets(
-        'EmpireWidget Test - Increment EmpireIntProperty - Finds Correct Text Widget After Property Change',
+        'CurrentWidget Test - Increment CurrentIntProperty - Finds Correct Text Widget After Property Change',
         (tester) async {
       const int initialAge = 10;
       viewModel.age(initialAge);
@@ -254,7 +256,7 @@ void main() {
     });
 
     testWidgets(
-        'EmpireWidget Test - Decrement EmpireIntProperty - Finds Correct Text Widget After Property Change',
+        'CurrentWidget Test - Decrement CurrentIntProperty - Finds Correct Text Widget After Property Change',
         (tester) async {
       const int initialAge = 10;
       viewModel.age(initialAge);
@@ -271,7 +273,7 @@ void main() {
 
   group('Exception/Edge Case Testing', () {
     testWidgets(
-        'EpireWidget Test - Attemp to share View Model Instance - Throws EmpireViewModelAlreadyAssignedException',
+        'EpireWidget Test - Attemp to share View Model Instance - Throws CurrentViewModelAlreadyAssignedException',
         (tester) async {
       late FlutterErrorDetails errorDetails;
       FlutterError.onError = (details) {
@@ -302,7 +304,7 @@ void main() {
 
       expect(errorDetails, isNotNull);
       expect(errorDetails.exception,
-          isInstanceOf<EmpireViewModelAlreadyAssignedException>());
+          isInstanceOf<CurrentViewModelAlreadyAssignedException>());
     });
   });
 }

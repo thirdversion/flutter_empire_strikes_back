@@ -1,25 +1,25 @@
-part of 'empire_property.dart';
+part of 'current_property.dart';
 
-///An [EmpireProperty] with similar characteristics as a dart [List<T>]
+///An [CurrentProperty] with similar characteristics as a dart [List<T>]
 ///
-///Any change to the internal list will send a [EmpireStateChanged] event by default. This includes
+///Any change to the internal list will send a [CurrentStateChanged] event by default. This includes
 ///automatically triggering a UI rebuild.
-class EmpireListProperty<T> extends EmpireProperty<List<T>> {
-  EmpireListProperty(super.value, {super.propertyName}) {
+class CurrentListProperty<T> extends CurrentProperty<List<T>> {
+  CurrentListProperty(super.value, {super.propertyName}) {
     _originalValue = List<T>.from(value);
   }
 
-  ///Factory constructor for initializing an [EmpireListProperty] to an empty [List].
+  ///Factory constructor for initializing an [CurrentListProperty] to an empty [List].
   ///
-  ///See [EmpireProperty] for [propertyName] usages.
+  ///See [CurrentProperty] for [propertyName] usages.
   ///
   ///## Example
   ///
   ///```dart
-  ///final marsOneVolunteers = EmpireListProperty<People>.empty();
+  ///final marsOneVolunteers = CurrentListProperty<People>.empty();
   ///```
-  factory EmpireListProperty.empty({String? propertyName}) {
-    return EmpireListProperty(<T>[], propertyName: propertyName);
+  factory CurrentListProperty.empty({String? propertyName}) {
+    return CurrentListProperty(<T>[], propertyName: propertyName);
   }
 
   /// Returns the first element.
@@ -43,7 +43,7 @@ class EmpireListProperty<T> extends EmpireProperty<List<T>> {
 
   /// A [List] of the objects in this list in reverse order.
   /// ```dart
-  /// final numbers = EmpireListProperty(['two', 'three', 'four']);
+  /// final numbers = CurrentListProperty(['two', 'three', 'four']);
   /// final reverseOrder = numbers.reversed;
   /// print(reverseOrder.toList()); // [four, three, two]
   /// ```
@@ -53,7 +53,7 @@ class EmpireListProperty<T> extends EmpireProperty<List<T>> {
   ///
   /// The valid indices for a list are `0` through `length - 1`.
   /// ```dart
-  /// final numbers = EmpireListProperty<int>([1, 2, 3]);
+  /// final numbers = CurrentListProperty<int>([1, 2, 3]);
   /// print(numbers.length); // 3
   /// ```
   int get length => _value.length;
@@ -62,7 +62,7 @@ class EmpireListProperty<T> extends EmpireProperty<List<T>> {
   ///
   /// Example:
   /// ```dart
-  /// final emptyList = EmpireListProperty<String>([])
+  /// final emptyList = CurrentListProperty<String>([])
   /// print(emptyList.isEmpty); // true;
   /// ```
   bool get isEmpty => _value.isEmpty;
@@ -71,7 +71,7 @@ class EmpireListProperty<T> extends EmpireProperty<List<T>> {
   ///
   /// Example:
   /// ```dart
-  /// final list = EmpireListProperty<String>(['Bob'])
+  /// final list = CurrentListProperty<String>(['Bob'])
   /// print(list.isNotEmpty); // true;
   /// ```
   bool get isNotEmpty => _value.isNotEmpty;
@@ -81,7 +81,7 @@ class EmpireListProperty<T> extends EmpireProperty<List<T>> {
   ///
   /// Example:
   /// ```dart
-  /// final numbers = EmpireListProperty([1, 2, 3, 5, 6, 7]);
+  /// final numbers = CurrentListProperty([1, 2, 3, 5, 6, 7]);
   /// var result = numbers.where((x) => x < 5); // (1, 2, 3)
   /// result = numbers.where((x) => x > 5); // (6, 7)
   /// result = numbers.where((x) => x.isEven); // (2, 6)
@@ -96,7 +96,7 @@ class EmpireListProperty<T> extends EmpireProperty<List<T>> {
   ///
   /// Example:
   /// ```dart
-  /// final numbers = EmpireListProperty([1, 2, 3, 5, 6, 7]);
+  /// final numbers = CurrentListProperty([1, 2, 3, 5, 6, 7]);
   /// var result = numbers.firstWhere((element) => element < 5); // 1
   /// result = numbers.firstWhere((element) => element > 5); // 6
   /// result =
@@ -116,7 +116,7 @@ class EmpireListProperty<T> extends EmpireProperty<List<T>> {
   ///
   /// Example:
   /// ```dart
-  /// final numbers = EmpireListProperty([1, 2, 3, 5, 6, 7]);
+  /// final numbers = CurrentListProperty([1, 2, 3, 5, 6, 7]);
   /// var result = numbers.firstWhere((element) => element < 5); // 1
   /// result = numbers.firstWhere((element) => element > 5); // 6
   /// result =
@@ -140,7 +140,7 @@ class EmpireListProperty<T> extends EmpireProperty<List<T>> {
   /// The list must be growable.
   ///
   /// ```dart
-  /// final numbers = EmpireListProperty<int>([1, 2, 3]);
+  /// final numbers = CurrentListProperty<int>([1, 2, 3]);
   /// numbers.add(4);
   /// print(numbers); // [1, 2, 3, 4]
   /// ```
@@ -148,7 +148,7 @@ class EmpireListProperty<T> extends EmpireProperty<List<T>> {
     _value.add(value);
 
     if (notifyChanges) {
-      viewModel.notifyChanges([EmpireStateChanged.addedToList(value)]);
+      viewModel.notifyChanges([CurrentStateChanged.addedToList(value)]);
     }
   }
 
@@ -158,7 +158,7 @@ class EmpireListProperty<T> extends EmpireProperty<List<T>> {
   /// The list must be growable.
   ///
   /// ```dart
-  /// final numbers = EmpireListProperty<int>([1, 2, 3]);
+  /// final numbers = CurrentListProperty<int>([1, 2, 3]);
   /// numbers.addAll([4, 5, 6]);
   /// print(numbers); // [1, 2, 3, 4, 5, 6]
   /// ```
@@ -166,7 +166,7 @@ class EmpireListProperty<T> extends EmpireProperty<List<T>> {
     _value.addAll(values);
 
     if (notifyChanges) {
-      viewModel.notifyChanges([EmpireStateChanged.addedAllToList(values)]);
+      viewModel.notifyChanges([CurrentStateChanged.addedAllToList(values)]);
     }
   }
 
@@ -179,7 +179,7 @@ class EmpireListProperty<T> extends EmpireProperty<List<T>> {
   /// The [index] value must be non-negative and no greater than [length].
   ///
   /// ```dart
-  /// final numbers = EmpireListProperty<int>([1, 2, 3, 4]);
+  /// final numbers = CurrentListProperty<int>([1, 2, 3, 4]);
   /// const index = 2;
   /// numbers.insert(index, 10);
   /// print(numbers); // [1, 2, 10, 3, 4]
@@ -189,7 +189,7 @@ class EmpireListProperty<T> extends EmpireProperty<List<T>> {
 
     if (notifyChanges) {
       viewModel
-          .notifyChanges([EmpireStateChanged.insertIntoList(index, value)]);
+          .notifyChanges([CurrentStateChanged.insertIntoList(index, value)]);
     }
   }
 
@@ -199,7 +199,7 @@ class EmpireListProperty<T> extends EmpireProperty<List<T>> {
   /// The list must be growable.
   /// The [index] must be a valid index in the list or [length].
   /// ```dart
-  /// final numbers = EmpireListProperty<int>([1, 2, 3, 4]);
+  /// final numbers = CurrentListProperty<int>([1, 2, 3, 4]);
   /// const index = 2;
   /// numbers.insertAll(index, [10, 11, 12]);
   /// print(numbers); // [1, 2, 10, 11, 12, 3, 4]
@@ -208,8 +208,8 @@ class EmpireListProperty<T> extends EmpireProperty<List<T>> {
     _value.insertAll(index, values);
 
     if (notifyChanges) {
-      viewModel
-          .notifyChanges([EmpireStateChanged.insertAllIntoList(index, values)]);
+      viewModel.notifyChanges(
+          [CurrentStateChanged.insertAllIntoList(index, values)]);
     }
   }
 
@@ -218,7 +218,7 @@ class EmpireListProperty<T> extends EmpireProperty<List<T>> {
   ///
   /// The list must be growable.
   /// ```dart
-  /// final numbers = EmpireListProperty<int>([1, 2, 3, 4]);
+  /// final numbers = CurrentListProperty<int>([1, 2, 3, 4]);
   /// numbers.insertAllAtEnd([10, 11, 12]);
   /// print(numbers); // [1, 2, 3, 4, 10, 11, 12]
   /// ```
@@ -227,7 +227,7 @@ class EmpireListProperty<T> extends EmpireProperty<List<T>> {
 
     if (notifyChanges) {
       viewModel.notifyChanges(
-          [EmpireStateChanged.insertAllIntoList(_value.length, values)]);
+          [CurrentStateChanged.insertAllIntoList(_value.length, values)]);
     }
   }
 
@@ -238,14 +238,14 @@ class EmpireListProperty<T> extends EmpireProperty<List<T>> {
   /// order as they occur in this list.
   ///
   /// ```dart
-  /// final colors = EmpireListProperty<String>(['red', 'green', 'blue', 'orange', 'pink']);
+  /// final colors = CurrentListProperty<String>(['red', 'green', 'blue', 'orange', 'pink']);
   /// print(colors.sublist(1, 3)); // [green, blue]
   /// ```
   ///
   /// If [end] is omitted, it defaults to the [length] of this list.
   ///
   /// ```dart
-  /// final colors = EmpireListProperty<String>(['red', 'green', 'blue', 'orange', 'pink']);
+  /// final colors = CurrentListProperty<String>(['red', 'green', 'blue', 'orange', 'pink']);
   /// print(colors.sublist(3)); // [orange, pink]
   /// ```
   ///
@@ -262,13 +262,13 @@ class EmpireListProperty<T> extends EmpireProperty<List<T>> {
   /// The list must be growable.
   ///
   /// ```dart
-  /// final parts = EmpireListProperty<String>['head', 'shoulders', 'knees', 'toes'];
+  /// final parts = CurrentListProperty<String>['head', 'shoulders', 'knees', 'toes'];
   /// final retVal = parts.remove('head'); // true
   /// print(parts); // [shoulders, knees, toes]
   /// ```
   /// The method has no effect if [value] was not in the list.
   /// ```dart
-  /// final parts = EmpireListProperty<String>['shoulders', 'knees', 'toes'];
+  /// final parts = CurrentListProperty<String>['shoulders', 'knees', 'toes'];
   /// // Note: 'head' has already been removed.
   /// final retVal = parts.remove('head'); // false
   /// print(parts); // [shoulders, knees, toes]
@@ -277,7 +277,7 @@ class EmpireListProperty<T> extends EmpireProperty<List<T>> {
     final wasRemoved = _value.remove(value);
 
     if (notifyChanges && wasRemoved) {
-      viewModel.notifyChanges([EmpireStateChanged.removedFromList(value)]);
+      viewModel.notifyChanges([CurrentStateChanged.removedFromList(value)]);
     }
 
     return wasRemoved;
@@ -293,7 +293,7 @@ class EmpireListProperty<T> extends EmpireProperty<List<T>> {
   /// The [index] must be in the range `0 ≤ index < length`.
   /// The list must be growable.
   /// ```dart
-  /// final parts = EmpireListProperty<String>['head', 'shoulder', 'knees', 'toes'];
+  /// final parts = CurrentListProperty<String>['head', 'shoulder', 'knees', 'toes'];
   /// final retVal = parts.removeAt(2); // knees
   /// print(parts); // [head, shoulder, toes]
   /// ```
@@ -302,7 +302,7 @@ class EmpireListProperty<T> extends EmpireProperty<List<T>> {
 
     if (notifyChanges) {
       viewModel
-          .notifyChanges([EmpireStateChanged.removedFromList(removedValue)]);
+          .notifyChanges([CurrentStateChanged.removedFromList(removedValue)]);
     }
 
     return removedValue;
@@ -313,14 +313,14 @@ class EmpireListProperty<T> extends EmpireProperty<List<T>> {
   /// The list must be growable.
   ///
   /// ```dart
-  /// final numbers = EmpireListProperty<int>([1, 2, 3]);
+  /// final numbers = CurrentListProperty<int>([1, 2, 3]);
   /// numbers.clear();
   /// print(numbers.length); // 0
   /// print(numbers); // []
   /// ```
   void clear({bool notifyChanges = true}) {
     final stateChangedEvent =
-        EmpireStateChanged.clearedList(_value, propertyName: propertyName);
+        CurrentStateChanged.clearedList(_value, propertyName: propertyName);
     _value.clear();
 
     if (notifyChanges) {
@@ -340,7 +340,7 @@ class EmpireListProperty<T> extends EmpireProperty<List<T>> {
   ///
   /// Example:
   /// ```dart
-  /// final gasPlanets = EmpireListProperty<String>(['Jupiter', 'Saturn']);
+  /// final gasPlanets = CurrentListProperty<String>(['Jupiter', 'Saturn']);
   /// final containsEarth = gasPlanets.contains('Earth'); // false
   /// final containsJupiter = gasPlanets.contains('Jupiter'); // true
   /// ```
@@ -366,7 +366,7 @@ class EmpireListProperty<T> extends EmpireProperty<List<T>> {
   ///
   /// Example:
   /// ```dart
-  /// var products = EmpireListProperty(
+  /// var products = CurrentListProperty(
   /// [
   ///   {"name": "Screwdriver", "price": 42.00},
   ///   {"name": "Wingnut", "price": 0.50}
@@ -390,7 +390,7 @@ class EmpireListProperty<T> extends EmpireProperty<List<T>> {
   ///
   /// Example:
   /// ```dart
-  /// final numbers = EmpireListProperty<int>([1, 2, 3, 5, 6, 7];
+  /// final numbers = CurrentListProperty<int>([1, 2, 3, 5, 6, 7];
   /// final elementAt = numbers.elementAt(4); // 6
   /// ```
   T elementAt(int index) {
@@ -401,7 +401,7 @@ class EmpireListProperty<T> extends EmpireProperty<List<T>> {
   ///
   /// Example:
   /// ```dart
-  /// final numbers = EmpireListProperty<int>([1, 2, 6, 7];
+  /// final numbers = CurrentListProperty<int>([1, 2, 6, 7];
   /// numbers.forEach(print);
   /// // 1
   /// // 2
@@ -418,14 +418,14 @@ class EmpireListProperty<T> extends EmpireProperty<List<T>> {
   /// The first time an object `o` is encountered so that `o == element`,
   /// the index of `o` is returned.
   /// ```dart
-  /// final notes = EmpireListProperty<String>['do', 're', 'mi', 're'];
+  /// final notes = CurrentListProperty<String>['do', 're', 'mi', 're'];
   /// print(notes.indexOf('re')); // 1
   ///
   /// final indexWithStart = notes.indexOf('re', 2); // 3
   /// ```
   /// Returns -1 if [value] is not found.
   /// ```dart
-  /// final notes = EmpireListProperty<String>['do', 're', 'mi', 're'];
+  /// final notes = CurrentListProperty<String>['do', 're', 'mi', 're'];
   /// final index = notes.indexOf('fa'); // -1
   /// ```
   int indexOf(T value, [int start = 0]) => _value.indexOf(value, start);
@@ -437,14 +437,14 @@ class EmpireListProperty<T> extends EmpireProperty<List<T>> {
   /// the index of `o` is returned.
   ///
   /// ```dart
-  /// final notes = EmpireListProperty<String>(['do', 're', 'mi', 're']);
+  /// final notes = CurrentListProperty<String>(['do', 're', 'mi', 're']);
   /// final first = notes.indexWhere((note) => note.startsWith('r')); // 1
   /// final second = notes.indexWhere((note) => note.startsWith('r'), 2); // 3
   /// ```
   ///
   /// Returns -1 if [element] is not found.
   /// ```dart
-  /// final notes = EmpireListProperty<String>['do', 're', 'mi', 're'];
+  /// final notes = CurrentListProperty<String>['do', 're', 'mi', 're'];
   /// final index = notes.indexWhere((note) => note.startsWith('k')); // -1
   /// ```
   int indexWhere(bool Function(T element) test, [int start = 0]) {
@@ -463,7 +463,7 @@ class EmpireListProperty<T> extends EmpireProperty<List<T>> {
   /// Returns the current contents of the list as a
   /// formatted String
   @override
-  String toString() => 'EmpireListProperty([${_value.join(", ")}])';
+  String toString() => 'CurrentListProperty([${_value.join(", ")}])';
 
   @override
   void reset({bool notifyChange = true}) {
@@ -472,7 +472,7 @@ class EmpireListProperty<T> extends EmpireProperty<List<T>> {
 
     if (notifyChange) {
       viewModel.notifyChanges([
-        EmpireStateChanged(
+        CurrentStateChanged(
           _originalValue,
           currentValue,
           propertyName: propertyName,

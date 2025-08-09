@@ -1,18 +1,18 @@
-import 'package:empire/src/empire_exceptions.dart';
-import 'package:empire/src/empire_cloneable.dart';
+import 'package:current/src/current_exceptions.dart';
+import 'package:current/src/current_cloneable.dart';
 
-import 'empire_view_model.dart';
+import 'current_view_model.dart';
 
-part 'empire_bool_property.dart';
-part 'empire_int_property.dart';
-part 'empire_double_property.dart';
-part 'empire_string_property.dart';
-part 'empire_map_property.dart';
-part 'empire_list_property.dart';
-part 'empire_date_time_property.dart';
+part 'current_bool_property.dart';
+part 'current_int_property.dart';
+part 'current_double_property.dart';
+part 'current_string_property.dart';
+part 'current_map_property.dart';
+part 'current_list_property.dart';
+part 'current_date_time_property.dart';
 
-///Base class for [EmpireProperty]
-abstract class EmpireValue<T> {
+///Base class for [CurrentProperty]
+abstract class CurrentValue<T> {
   T? get value;
 }
 
@@ -22,13 +22,13 @@ abstract class EmpireValue<T> {
 ///
 ///You optionally set the [propertyName] argument to conditionally perform logic when a specific
 ///property changes. You can access the [propertyName] in any event listener registered with the
-///[EmpireViewModel.addOnStateChangedListener] function via the [propertyName] property on an [EmpireStateChanged] object.
+///[CurrentViewModel.addOnStateChangedListener] function via the [propertyName] property on an [CurrentStateChanged] object.
 ///
-///If [T] is of type [List] or [Map], use either [EmpireListProperty] or [EmpireMapProperty]. Not doing so
+///If [T] is of type [List] or [Map], use either [CurrentListProperty] or [CurrentMapProperty]. Not doing so
 ///will prevent the [reset] function from performing as expected.
 ///
-///An [EmpireProperty] is callable. Calling the property updates the value. However, there are two
-///ways to update the value of an [EmpireProperty]:
+///An [CurrentProperty] is callable. Calling the property updates the value. However, there are two
+///ways to update the value of an [CurrentProperty]:
 ///
 ///*Using [set]*:
 ///```dart
@@ -49,7 +49,7 @@ abstract class EmpireValue<T> {
 /////update the property value to five.
 ///age(5);
 ///```
-class EmpireProperty<T> implements EmpireValue<T> {
+class CurrentProperty<T> implements CurrentValue<T> {
   String? propertyName;
 
   final bool isPrimitiveType;
@@ -69,21 +69,21 @@ class EmpireProperty<T> implements EmpireValue<T> {
   /// Returns true if the value of [this] is not null.
   bool get isNotNull => !isNull;
 
-  EmpireViewModel? _viewModel;
+  CurrentViewModel? _viewModel;
 
-  /// Returns the instance of the [EmpireViewModel] this
+  /// Returns the instance of the [CurrentViewModel] this
   /// property is associated with.
   ///
-  EmpireViewModel get viewModel {
+  CurrentViewModel get viewModel {
     if (_viewModel == null) {
-      throw PropertyNotAssignedToEmpireViewModelException(
+      throw PropertyNotAssignedToCurrentViewModelException(
           StackTrace.current, propertyName, runtimeType);
     } else {
       return _viewModel!;
     }
   }
 
-  EmpireProperty(
+  CurrentProperty(
     this._value, {
     this.propertyName,
     this.isPrimitiveType = false,
@@ -91,13 +91,13 @@ class EmpireProperty<T> implements EmpireValue<T> {
     _originalValue = _value;
   }
 
-  ///Links this EmpireProperty instance with an [EmpireViewModel].
+  ///Links this CurrentProperty instance with an [CurrentViewModel].
   ///
-  void setViewModel(EmpireViewModel viewModel) {
+  void setViewModel(CurrentViewModel viewModel) {
     _viewModel = viewModel;
   }
 
-  /// Updates the underlying [value] for this EmpireProperty.
+  /// Updates the underlying [value] for this CurrentProperty.
   ///
   /// If [notifyChange] is true, a UI update will be triggered after the change occurs. Otherwise,
   /// only the value will be set.
@@ -143,7 +143,7 @@ class EmpireProperty<T> implements EmpireValue<T> {
     _value = value;
     if (notifyChange && previousValue != value) {
       viewModel.notifyChanges([
-        EmpireStateChanged(value, previousValue, propertyName: propertyName)
+        CurrentStateChanged(value, previousValue, propertyName: propertyName)
       ]);
     }
 
@@ -157,22 +157,22 @@ class EmpireProperty<T> implements EmpireValue<T> {
   ///Resets the [value] to the [originalValue].
   ///
   ///If [T] is a class with properties, changing the properties directly on the object
-  ///instead of updating this EmpireProperty with a new instance of [T] with the updated values will
+  ///instead of updating this CurrentProperty with a new instance of [T] with the updated values will
   ///prevent [reset] from performing as expected. Tracking the original value is done by reference
   ///internally.
   ///
   ///If [T] is a reference type, calling [reset] will update the [value] to the [originalValue] by
-  ///reference, causing unexpected behavior. To avoid this, T should implement [EmpireCloneable]
+  ///reference, causing unexpected behavior. To avoid this, T should implement [CurrentCloneable]
   ///so the [value] will be reset to a deep copy of the [originalValue].
   ///
   ///If [T] is a primitiveType, setting [isPrimitiveType] to true will cause the supress the warning.
-  ///Consider using the typed EmpireProperty classes (eg: [EmpireIntProperty], [EmpireStringProperty])
-  ///in place of the generic [EmpireProperty] class for primitives.
+  ///Consider using the typed CurrentProperty classes (eg: [CurrentIntProperty], [CurrentStringProperty])
+  ///in place of the generic [CurrentProperty] class for primitives.
   ///
   ///## Usage
   ///
   ///```dart
-  ///final age = EmpireProperty<int>(10); //age.value is 10
+  ///final age = CurrentProperty<int>(10); //age.value is 10
   ///
   ///age(20); //age.value is 20
   ///age(25); //age.value is 25
@@ -184,20 +184,20 @@ class EmpireProperty<T> implements EmpireValue<T> {
   void reset({bool notifyChange = true}) {
     final currentValue = _value;
 
-    if (_originalValue is EmpireCloneable) {
-      _value = (_originalValue as EmpireCloneable).clone();
+    if (_originalValue is CurrentCloneable) {
+      _value = (_originalValue as CurrentCloneable).clone();
     } else if (isPrimitiveType) {
       _value = _originalValue;
     } else {
       // ignore: avoid_print
       print(
-          '[Empire] WARNING: $T is not EmpireCloneable and not marked as a primitive type. Reset may result in unexpected behavior. See EmpireProperty.reset documentation for more information.');
+          '[Current] WARNING: $T is not CurrentCloneable and not marked as a primitive type. Reset may result in unexpected behavior. See CurrentProperty.reset documentation for more information.');
       _value = _originalValue;
     }
 
     if (notifyChange) {
       viewModel.notifyChanges([
-        EmpireStateChanged(
+        CurrentStateChanged(
           _originalValue,
           currentValue,
           propertyName: propertyName,
@@ -209,22 +209,22 @@ class EmpireProperty<T> implements EmpireValue<T> {
   @override
   String toString() => _value?.toString() ?? '';
 
-  ///Checks if [other] is equal to the [value] of this EmpireProperty
+  ///Checks if [other] is equal to the [value] of this CurrentProperty
   ///
   ///### Usage
   ///
   ///```dart
-  ///final age = EmpireProperty<int>(10);
+  ///final age = CurrentProperty<int>(10);
   ///
   ///age.equals(10); //returns true
   ///
   ///
-  ///final ageTwo = EmpireProperty<int>(10);
+  ///final ageTwo = CurrentProperty<int>(10);
   ///
   ///age.equals(ageTwo); //returns true
   ///```
   bool equals(dynamic other) {
-    if (other is EmpireProperty) {
+    if (other is CurrentProperty) {
       return other.value == value;
     } else {
       return other == value;
@@ -239,33 +239,33 @@ class EmpireProperty<T> implements EmpireValue<T> {
   int get hashCode => _value.hashCode;
 }
 
-///Short hand helper function for initializing an [EmpireProperty].
+///Short hand helper function for initializing an [CurrentProperty].
 ///
-///See [EmpireProperty] for [propertyName] usages.
+///See [CurrentProperty] for [propertyName] usages.
 ///
 ///## Example
 ///
 ///```dart
-///late final EmpireProperty<String> name;
+///late final CurrentProperty<String> name;
 ///
 ///name = createProperty('Bob');
 ///```
-EmpireProperty<T> createProperty<T>(T value, {String? propertyName}) {
-  return EmpireProperty<T>(value, propertyName: propertyName);
+CurrentProperty<T> createProperty<T>(T value, {String? propertyName}) {
+  return CurrentProperty<T>(value, propertyName: propertyName);
 }
 
-///Short hand helper function for initializing an [EmpireProperty] with a null value.
+///Short hand helper function for initializing an [CurrentProperty] with a null value.
 ///
-///See [EmpireProperty] for [propertyName] usages.
+///See [CurrentProperty] for [propertyName] usages.
 ///
 ///## Example
 ///
 ///```dart
-///late final EmpireProperty<String?> name;
+///late final CurrentProperty<String?> name;
 ///
 ///name = createNullProperty();
 ///
 ///```
-EmpireProperty<T?> createNullProperty<T>({String? propertyName}) {
+CurrentProperty<T?> createNullProperty<T>({String? propertyName}) {
   return createProperty(null, propertyName: propertyName);
 }

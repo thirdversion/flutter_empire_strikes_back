@@ -1,27 +1,27 @@
-import 'package:empire/empire.dart';
+import 'package:current/current.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/material.dart';
 
-class MapViewModel extends EmpireViewModel {
-  final data = EmpireMapProperty<String, String>.empty();
+class MapViewModel extends CurrentViewModel {
+  final data = CurrentMapProperty<String, String>.empty();
 
   @override
-  Iterable<EmpireProperty> get empireProps => [data];
+  Iterable<CurrentProperty> get currentProps => [data];
 }
 
-class MapTestWidget extends EmpireWidget<MapViewModel> {
+class MapTestWidget extends CurrentWidget<MapViewModel> {
   const MapTestWidget({
     Key? key,
     required MapViewModel viewModel,
   }) : super(key: key, viewModel: viewModel);
 
   @override
-  EmpireState<EmpireWidget<EmpireViewModel>, MapViewModel> createEmpire() {
+  CurrentState<CurrentWidget<CurrentViewModel>, MapViewModel> createCurrent() {
     return _MapTestWidgetState(viewModel);
   }
 }
 
-class _MapTestWidgetState extends EmpireState<MapTestWidget, MapViewModel> {
+class _MapTestWidgetState extends CurrentState<MapTestWidget, MapViewModel> {
   _MapTestWidgetState(super.viewModel);
 
   @override
@@ -46,7 +46,7 @@ class _MapTestWidgetState extends EmpireState<MapTestWidget, MapViewModel> {
 }
 
 void main() {
-  group('EmpireMapProperty Tests', () {
+  group('CurrentMapProperty Tests', () {
     late MapViewModel viewModel;
     late MapTestWidget testWidget;
     setUp(() {
@@ -375,7 +375,7 @@ void main() {
     test(
         'reset - starting map is empty - add item - should be empty after reset',
         () {
-      final data = EmpireMapProperty<String, String>.empty();
+      final data = CurrentMapProperty<String, String>.empty();
       data.setViewModel(viewModel);
       data.add('name', 'Bob');
 
@@ -394,7 +394,7 @@ void main() {
       const String tmpKey = 'lastName';
       const String tmpValue = 'Smith';
 
-      final data = EmpireMapProperty<String, String>({key: value});
+      final data = CurrentMapProperty<String, String>({key: value});
       data.setViewModel(viewModel);
 
       expect(data.containsKey(key), isTrue);
@@ -414,7 +414,7 @@ void main() {
     });
 
     test('resetting retains original value', () {
-      final data = EmpireMapProperty<String, String>.empty();
+      final data = CurrentMapProperty<String, String>.empty();
       data.setViewModel(viewModel);
       data.add('name', 'Bob');
 
